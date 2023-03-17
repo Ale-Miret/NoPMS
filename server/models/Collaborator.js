@@ -21,3 +21,7 @@ const collaboratorSchema = new Schema({
 const Collaborator = model('Collaborator', collaboratorSchema);
 
 module.exports = Collaborator;
+
+
+
+
