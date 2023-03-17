@@ -18,6 +18,8 @@ const collaboratorSchema = new Schema({
     assignments: [assignmentSchema],
 });
 
-const Collaborator = model('Collaborator', collaboratorSchema);
+// const Collaborator = model('Collaborator', collaboratorSchema);
 
-module.exports = Collaborator;
+// module.exports = Collaborator;
+
+module.exports = collaboratorSchema;

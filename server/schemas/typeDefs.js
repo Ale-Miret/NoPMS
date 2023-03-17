@@ -6,7 +6,7 @@ const typeDefs = gql`
     username: String
     email: String
     gitHubUserName: String
-    savedProjects: [project]
+    savedProjects: [Project]
   }
 
   type Project {
@@ -14,14 +14,40 @@ const typeDefs = gql`
     projectName: [String]
     description: String
     gitHubLink: String
-    projectCollaborators: [Object]
+    projectCollaborators: [Collaborator]
+  }
+
+  type Collaborator {
+    positionName: String
+    userName: String
+    assignments: [Assignment]
+  }
+
+  type Assignment {
+    taskTitle: String
+    taskDesc: String
+    userName: String
+    assignedAt: String
   }
 
   input ProjectInput {
     projectName: [String]
     description: String
     gitHubLink: String
-    projectCollaborators: [Object]
+    projectCollaborators: [CollaboratorInput]
+  }
+
+  input CollaboratorInput {
+    positionName: String
+    userName: String
+    assignments: [AssignmentInput]
+  }
+
+  input AssignmentInput {
+    taskTitle: String
+    taskDesc: String
+    userName: String
+    assignedAt: String
   }
 
   type Auth {
@@ -37,7 +63,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!,gitHubUserName: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     saveProject(projectData: ProjectInput): User
-    removeProject(projectId: _ID): User
+    removeProject(projectId: ID): User
   }
   `;
 
