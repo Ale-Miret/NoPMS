@@ -1,48 +1,43 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const typeDefs = require('./schemas');
-const resolvers = require('./resolvers');
-const auth = require('./middleware/auth');
+const path = require('path');
+const db = require('./config/connection');
+// const routes = require('./routes');
+const { authMiddleware } = require('./utils/auth');
+const { typeDefs, resolvers } = require('./schemas');
+
 const app = express();
-dotenv.config();
-
-// Connect to MongoDB database
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-})
-.then(() => console.log('MongoDB connected'))
-.catch((err) => console.log(err));
-
-// Enable cross-origin resource sharing
-app.use(cors());
-
-// Apply authentication middleware to all routes except login and register
-app.use('/api', auth);
-
-// Create GraphQL server with ApolloServer
+const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ user: req.user })
+  context: authMiddleware,
 });
-server.applyMiddleware({ app, path: '/api' });
 
-// Serve static files in production
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+// if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
+  app.use(express.static(path.join(__dirname, '../client/build')));
 }
 
-// Start the server
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
+
+// Create a new instance of an Apollo server with the GraphQL schema
+const startApolloServer = async (typeDefs, resolvers) => {
+  await server.start();
+  server.applyMiddleware({ app });
+
+  db.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}!`);
+      console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+    })
+  })
+  };
+
+  // Call the async function to start the server
+  startApolloServer(typeDefs, resolvers);
