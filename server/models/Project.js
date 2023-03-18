@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // import schema from User.js
 // const collaboratorSchema = require('./Collaborator');
@@ -25,4 +25,6 @@ const projectSchema = new Schema({
 
 });
 
-module.exports = projectSchema;
+const Project = model('Project', projectSchema);
+
+module.exports = Project;
