@@ -1,6 +1,5 @@
 // Imports
 const { Schema, model } = require('mongoose');
-const assignmentSchema = require('./Assignment');
 
 // Collaborator Schema
 const collaboratorSchema = new Schema({
@@ -15,11 +14,10 @@ const collaboratorSchema = new Schema({
         required: true,
         trim: true,
     },
-    assignments: [assignmentSchema],
+    assignments: [{type: Schema.Types.ObjectId, ref: 'Assignment'}],
 });
 
-// const Collaborator = model('Collaborator', collaboratorSchema);
+const Collaborator = model('Collaborator', collaboratorSchema);
 
-// module.exports = Collaborator;
+module.exports = Collaborator;
 
-module.exports = collaboratorSchema;
