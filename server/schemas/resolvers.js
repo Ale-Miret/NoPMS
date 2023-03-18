@@ -76,7 +76,7 @@
 
 // module.exports = resolvers;
 // import user model
-const { User } = require("../models");
+const { User, Project, Collaborator } = require("../models");
 
 // import jsonwebtoken
 const jwt = require("jsonwebtoken");
@@ -97,7 +97,13 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    // ...
+    projects: async () => {
+      return await Project.find({});
+    },
+  // ...
   },
+  
   Mutation: {
     // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
     addUser: async (parent, { username, email, gitHubUserName, password }) => {
@@ -140,7 +146,7 @@ const resolvers = {
     },
     removeProject: async (parent, { projectId }, context) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
+        return User.findOneAndUpdate(
           { _id: context.user._id },
           {
             $pull: { savedProjects: projectId },

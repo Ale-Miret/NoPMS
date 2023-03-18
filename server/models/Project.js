@@ -1,9 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-// import schema from User.js
-// const collaboratorSchema = require('./Collaborator');
-const Collaborator = require('./Collaborator');
-
 
 const projectSchema = new Schema({
   projectName: {
