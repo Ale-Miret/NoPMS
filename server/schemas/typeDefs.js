@@ -50,6 +50,13 @@ const typeDefs = gql`
     assignedAt: String
   }
 
+  input UserUpdateInput {
+    username: String
+    email: String
+    gitHubUserName: String
+    password: String
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -67,6 +74,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     saveProject(projectData: ProjectInput): User
     removeProject(projectId: ID): User
+    updateUser(_id: ID!, input: UserUpdateInput): User
+    deleteUser: User
   }
   `;
 

@@ -153,7 +153,28 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    
+    updateUser: async (parent, { username, email, gitHubUserName, password }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { username, email, gitHubUserName, password },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    
+    deleteUser: async (parent, args, context) => {
+      if (context.user) {
+        const deletedUser = await User.findOneAndDelete({ _id: context.user._id });
+        return deletedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
   },
+  
 };
 
 module.exports = resolvers;
