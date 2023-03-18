@@ -1,27 +1,22 @@
-import { Link } from "react-router-dom";
+import React from "react";
 
-const ProjectList = ({ projects, title }) => {
-    
-    return ( 
-        <div className="project-page">
-            <div>
-                <h2>Create Projects</h2>
-                <h2>Manage Projects</h2>
-            </div>
-            <div>
-                
-                <h3>Project Name</h3>
-                <p>Description</p>
-                <p>Collaborators</p>
-                <p>date created</p>
-                <p>purpose</p>
-                    <div>
-                        <h3>technologies</h3>
-                        <h3>github repo</h3>
-                    </div>
-            </div>
-        </div>
-     );
-}
- 
+const ProjectList = ({ projects }) => {
+  return (
+    <ul>
+      {projects.map((project) => (
+        <li key={project._id}>
+          <h2>{project.projectName}</h2>
+          <p>{project.description}</p>
+          <a href={project.gitHubLink}>GitHub Link</a>
+          <ul>
+            {project.projectCollaborators.map((collaborator) => (
+              <li key={collaborator._id}>{collaborator.name}</li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 export default ProjectList;
