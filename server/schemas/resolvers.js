@@ -75,8 +75,10 @@
 // };
 
 // module.exports = resolvers;
+
 // import user model
 const { User } = require("../models");
+const { AuthenticationError } = require("apollo-server-express");
 
 // import jsonwebtoken
 const jwt = require("jsonwebtoken");
@@ -140,7 +142,7 @@ const resolvers = {
     },
     removeProject: async (parent, { projectId }, context) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
+        return User.findOneAndUpdate(
           { _id: context.user._id },
           {
             $pull: { savedProjects: projectId },
@@ -166,13 +168,22 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     
-    deleteUser: async (parent, args, context) => {
+    // deleteUser: async (parent, args, context) => {
+    //   if (context.user) {
+    //     const deletedUser = await User.findOneAndDelete({ _id: context.user._id });
+    //     return deletedUser;
+    //   }
+    //   throw new AuthenticationError("You need to be logged in!");
+    // },
+
+    deleteUser: async (parent, { _id }, context) => {
       if (context.user) {
-        const deletedUser = await User.findOneAndDelete({ _id: context.user._id });
+        const deletedUser = await User.findOneAndDelete({ _id });
         return deletedUser;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    
   },
   
 };
