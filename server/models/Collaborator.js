@@ -14,7 +14,7 @@ const collaboratorSchema = new Schema({
         required: true,
         trim: true,
     },
-    assignments: [{type: Schema.Types.ObjectId, ref: 'Assignment'}],
+    assignments: [{ type: Schema.Types.ObjectId, ref: 'Assignment' }],
 });
 
 const Collaborator = model('Collaborator', collaboratorSchema);
