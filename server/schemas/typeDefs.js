@@ -11,13 +11,14 @@ const typeDefs = gql`
 
   type Project {
     _id: ID
-    projectName: [String]
+    projectName: String
     description: String
     gitHubLink: String
     projectCollaborators: [Collaborator]
   }
 
   type Collaborator {
+    _id: ID
     positionName: String
     userName: String
     assignments: [Assignment]
@@ -67,6 +68,7 @@ const typeDefs = gql`
     user: User
     users: [User]
     allUsers: [User]
+    projects: [Project]
   }
 
   type Mutation {
