@@ -1,7 +1,9 @@
 // Imports
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_PROJECT } from '../utils/mutations';
+import { Link } from 'react-router-dom';
 
 // Create Project Function
 const CreateProject = () => {
@@ -11,6 +13,7 @@ const CreateProject = () => {
         description: '',
         github: '',
     });
+    let navigate = useNavigate();
     const [createProject, {error, data}] = useMutation(CREATE_PROJECT);
 
     const handleChange = (event) => {
@@ -30,6 +33,7 @@ const CreateProject = () => {
             const { data } = await createProject({
                 variables: { ...formState },
             });
+            navigate(`/projects`);
         } catch (e) {
             console.error(e);
         }
