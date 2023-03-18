@@ -1,7 +1,8 @@
 const { Schema } = require('mongoose');
 
-
-const collaboratorSchema = require('./Collaborator');
+// import schema from User.js
+// const collaboratorSchema = require('./Collaborator');
+const Collaborator = require('./Collaborator');
 
 
 const projectSchema = new Schema({
@@ -18,7 +19,9 @@ const projectSchema = new Schema({
     type: String,
     required: true,
   },
-  projectCollaborators: [collaboratorSchema],
+  // projectCollaborators: [collaboratorSchema],
+  projectCollaborators: [{ type: Schema.Types.ObjectId, ref: 'Collaborator' }],
+
 
 });
 
