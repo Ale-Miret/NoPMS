@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-
 const projectSchema = new Schema({
   projectName: {
       type: String,
@@ -10,7 +9,7 @@ const projectSchema = new Schema({
     type: String,
     required: true,
   },
- 
+  // Link to github repository
   gitHubLink: {
     type: String,
     required: true,

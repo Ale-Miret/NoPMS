@@ -16,6 +16,7 @@ import { setContext } from '@apollo/client/link/context';
 // import Contact from "./pages/Contact";
 import Projects from "./pages/Projects";
 import Login from "./pages/Login";
+import CreateProject from "./components/CreateProject";
 
 
 
@@ -52,6 +53,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path='/projects/create' element={<CreateProject />} />
           </Routes>
         </div>
       </Router>

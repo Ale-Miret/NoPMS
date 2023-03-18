@@ -23,3 +23,11 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const CREATE_PROJECT = gql`
+  mutation createProject($projectname: String!, $description: String!, $github: String!) {
+    createProject(projectname: $projectname, description: $description, github: $github) {
+      _id
+    }
+  }
+`;
