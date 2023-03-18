@@ -17,8 +17,7 @@ const collaboratorSchema = new Schema({
     assignments: [{ type: Schema.Types.ObjectId, ref: 'Assignment' }],
 });
 
-// const Collaborator = model('Collaborator', collaboratorSchema);
+const Collaborator = model('Collaborator', collaboratorSchema);
 
-// module.exports = Collaborator;
+module.exports = Collaborator;
 
-module.exports = collaboratorSchema;
