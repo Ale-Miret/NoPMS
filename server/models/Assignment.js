@@ -30,8 +30,7 @@ const assignmentSchema = new Schema({
     },
 });
 
-// const Assignment = model('Assignment', assignmentSchema);
+const Assignment = model('Assignment', assignmentSchema);
 
-// module.exports = Assignment;
+module.exports = Assignment;
 
-module.exports = assignmentSchema;
