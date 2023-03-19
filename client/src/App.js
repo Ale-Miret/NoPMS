@@ -8,12 +8,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-// import components
 
-
-// import pages
-// import ProjectDetails from "./pages/ProjectDetails";
-// import Contact from "./pages/Contact";
 import Projects from "./pages/Projects";
 import Login from "./pages/Login";
 import CreateProject from "./components/CreateProject";
@@ -57,7 +52,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path='/projects/create' element={<CreateProject />} />
+            <Route path='/cprojects/create' element={<CreateProject />} />
           </Routes>
         </div>
       </Router>
@@ -69,3 +64,9 @@ export default App;
             
             // <Route path="/details" element={<ProjectDetails />} />
             // <Route path="/contact" element={<Contact />} />
+// / import components/
+
+
+// import pages
+// import ProjectDetails from "./pages/ProjectDetails";
+// import Contact from "./pages/Contact";

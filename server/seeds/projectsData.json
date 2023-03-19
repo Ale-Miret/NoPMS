@@ -1,8 +1,38 @@
 [
     {
-        "projectName": "Person",
-        "description": "stuff",
+        "projectName": "NoPMS Project Managment System",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris euismod nunc ut orci posuere varius. Pellentesque eu quam eu elit cursus bibendum. Aenean non consequat lectus, quis rutrum ligula. Proin.",
         "gitHubLink": "https://github.com/jon-dev092",
         "projectCollaborators": "random peeps"
-    }
+    },
+    {
+        "projectName": "Note-Taker Tool",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris euismod nunc ut orci posuere varius. Pellentesque eu quam eu elit cursus bibendum. Aenean non consequat lectus, quis rutrum ligula. Proin.",
+        "gitHubLink": "https://github.com/jon-dev092",
+        "projectCollaborators": "random peeps"
+    },
+    {
+        "projectName": "Grynd-Fitness",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris euismod nunc ut orci posuere varius. Pellentesque eu quam eu elit cursus bibendum. Aenean non consequat lectus, quis rutrum ligula. Proin.",
+        "gitHubLink": "https://github.com/jon-dev092",
+        "projectCollaborators": "random peeps"
+    },
+    {
+        "projectName": "Better Have My Money",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris euismod nunc ut orci posuere varius. Pellentesque eu quam eu elit cursus bibendum. Aenean non consequat lectus, quis rutrum ligula. Proin.",
+        "gitHubLink": "https://github.com/jon-dev092",
+        "projectCollaborators": "random peeps"
+    },
+    {
+        "projectName": "React Tech-Blog",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris euismod nunc ut orci posuere varius. Pellentesque eu quam eu elit cursus bibendum. Aenean non consequat lectus, quis rutrum ligula. Proin.",
+        "gitHubLink": "https://github.com/jon-dev092",
+        "projectCollaborators": "random peeps"
+    },
+    {
+        "projectName": "Project Management Tool",
+        "description": "A MERN stack project management tool for developers",
+        "gitHubLink": "https://github.com/user/project-management-tool",
+        "projectCollaborators": "random peeps"
+      }
 ]
