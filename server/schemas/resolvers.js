@@ -79,6 +79,9 @@
 // import user model
 const { User, Project, Collaborator } = require("../models");
 
+// import the AuthenticationError object
+const { AuthenticationError } = require("apollo-server-express"); 
+
 // import jsonwebtoken
 const jwt = require("jsonwebtoken");
 
