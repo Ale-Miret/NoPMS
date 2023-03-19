@@ -13,15 +13,11 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-      }
-    }
+mutation AddUser($username: String!, $email: String!, $gitHubUserName: String!, $password: String!) {
+  addUser(username: $username, email: $email, gitHubUserName: $gitHubUserName, password: $password) {
+    token
   }
+}
 `;
 
 export const CREATE_PROJECT = gql`
