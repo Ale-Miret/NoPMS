@@ -77,7 +77,7 @@ const typeDefs = gql`
     saveProject(projectData: ProjectInput): User
     removeProject(projectId: ID): User
     updateUser(_id: ID!, input: UserUpdateInput): User
-    deleteUser: User
+    deleteUser(_id: ID!): User
   }
   `;
 
