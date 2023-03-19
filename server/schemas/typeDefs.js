@@ -78,6 +78,7 @@ const typeDefs = gql`
     removeProject(projectId: ID): User
     updateUser(_id: ID!, input: UserUpdateInput): User
     deleteUser(_id: ID!): User
+    createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID]): Project
   }
   `;
 

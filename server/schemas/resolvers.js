@@ -103,7 +103,7 @@ const resolvers = {
     },
     // ...
     projects: async () => {
-      return await Project.find({});
+      return await Project.find({}).populate('projectCollaborators');
     },
   // ...
   },
@@ -132,6 +132,22 @@ const resolvers = {
       const token = jwt.sign({ data: user }, secret, { expiresIn: expiration });
 
       return { token, user };
+    },
+    createProject: async (parent, { projectName, description, gitHubLink, projectCollaborators }, context) => {
+      if (context.user) {
+        const newProject = await Project.create({
+          projectName,
+          description,
+          gitHubLink,
+          projectCollaborators,
+          owner: context.user._id,
+        });
+    
+        await User.findByIdAndUpdate(context.user._id, { $addToSet: { savedProjects: newProject._id } });
+    
+        return newProject;
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     saveProject: async (parent, { newProject }, context) => {
       if (context.user) {
@@ -176,13 +192,7 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     
-    // deleteUser: async (parent, args, context) => {
-    //   if (context.user) {
-    //     const deletedUser = await User.findOneAndDelete({ _id: context.user._id });
-    //     return deletedUser;
-    //   }
-    //   throw new AuthenticationError("You need to be logged in!");
-    // },
+   
 
     deleteUser: async (parent, { _id }, context) => {
       if (context.user) {
@@ -198,3 +208,10 @@ const resolvers = {
 
 module.exports = resolvers;
 
+ // deleteUser: async (parent, args, context) => {
+    //   if (context.user) {
+    //     const deletedUser = await User.findOneAndDelete({ _id: context.user._id });
+    //     return deletedUser;
+    //   }
+    //   throw new AuthenticationError("You need to be logged in!");
+    // },

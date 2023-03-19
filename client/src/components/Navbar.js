@@ -59,7 +59,7 @@ export default function Navigation() {
       </Link>
       <br />
       <Link
-        className={isActive('/projects/create')}
+        className={isActive('/cprojects/create')}
         to="/cprojects/create"
       >
         Create Project
