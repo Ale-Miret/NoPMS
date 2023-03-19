@@ -32,7 +32,10 @@ import ProjectList from "../components/ProjectList";
 import { GET_PROJECTS } from "../utils/queries";
 
 const Projects = () => {
-  const { loading, error, data } = useQuery(GET_PROJECTS);
+  const { loading, error, data } = useQuery(GET_PROJECTS, {
+    fetchPolicy: 'network-only',
+  });
+  
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
