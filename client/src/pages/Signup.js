@@ -9,6 +9,7 @@ const Signup = () => {
   const [formState, setFormState] = useState({
     username: '',
     email: '',
+    gitHubUserName: '',
     password: '',
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
@@ -64,6 +65,14 @@ const Signup = () => {
                   name="email"
                   type="email"
                   value={formState.email}
+                  onChange={handleChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="Your GitHub User Name"
+                  name="gitHubUserName"
+                  type="text"
+                  value={formState.gitHubUserName}
                   onChange={handleChange}
                 />
                 <input
