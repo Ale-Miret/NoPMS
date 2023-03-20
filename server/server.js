@@ -121,7 +121,7 @@ app.post('/api/login', async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: info.message });
     }
-    const token = jwt.sign({ id: user._id }, 'your-secret-key-here');
+    const token = jwt.sign({ id: user._id }, 'mysecretssshhhhhhh');
     return res.json({ token });
   })(req, res);
 });
