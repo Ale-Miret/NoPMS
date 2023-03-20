@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 
@@ -9,9 +9,11 @@ const Signup = () => {
   const [formState, setFormState] = useState({
     username: '',
     email: '',
+    gitHubUserName: '',
     password: '',
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,6 +34,8 @@ const Signup = () => {
       });
 
       Auth.login(data.addUser.token);
+      await navigate('/');
+
     } catch (e) {
       console.error(e);
     }
@@ -64,6 +68,14 @@ const Signup = () => {
                   name="email"
                   type="email"
                   value={formState.email}
+                  onChange={handleChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="Your GitHub User Name"
+                  name="gitHubUserName"
+                  type="text"
+                  value={formState.gitHubUserName}
                   onChange={handleChange}
                 />
                 <input

@@ -11,13 +11,14 @@ const typeDefs = gql`
 
   type Project {
     _id: ID
-    projectName: [String]
+    projectName: String
     description: String
     gitHubLink: String
     projectCollaborators: [Collaborator]
   }
 
   type Collaborator {
+    _id: ID
     positionName: String
     userName: String
     assignments: [Assignment]
@@ -50,6 +51,13 @@ const typeDefs = gql`
     assignedAt: String
   }
 
+  input UserUpdateInput {
+    username: String
+    email: String
+    gitHubUserName: String
+    password: String
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -57,13 +65,20 @@ const typeDefs = gql`
 
   type Query {
     me: User
+    user: User
+    users: [User]
+    allUsers: [User]
+    projects: [Project]
+    project(projectId: ID!): Project
   }
 
   type Mutation {
-    addUser(username: String!, email: String!,gitHubUserName: String!, password: String!): Auth
+    addUser(username: String!, email: String!, gitHubUserName: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     saveProject(projectData: ProjectInput): User
     removeProject(projectId: ID): User
+    updateUser(_id: ID!, input: UserUpdateInput): User
+    createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID]): Project
   }
   `;
 
