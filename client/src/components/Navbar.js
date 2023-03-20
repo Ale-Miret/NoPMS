@@ -70,6 +70,8 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import Auth from '../utils/auth';
 
 export default function Navigation() {
   const location = useLocation();
@@ -80,13 +82,9 @@ export default function Navigation() {
 
   return (
     <nav className="navbar">
-      <Link className={`nav-link ${isActive('/')}`} to="/">
-        Login
-      </Link>
-      <Link className={`nav-link ${isActive('/signup')}`} to="/signup">
-        Signup
-      </Link>
-      <Link className={`nav-link ${isActive('/projects')}`} to="/projects">
+      {Auth.loggedIn() ? (
+                <>
+                  <Link className={`nav-link ${isActive('/projects')}`} to="/projects">
         Projects
       </Link>
       <Link
@@ -95,6 +93,18 @@ export default function Navigation() {
       >
         Create Project
       </Link>
+                  <Link onClick={Auth.logout}>Logout</Link>
+                </>
+              ) : (
+                <>
+                <Link className={`nav-link ${isActive('/')}`} to="/">
+        Login
+      </Link>
+      <Link className={`nav-link ${isActive('/signup')}`} to="/signup">
+        Signup
+      </Link>
+      </>
+              )}
     </nav>
   );
 }
