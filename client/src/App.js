@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import CreateProject from "./components/CreateProject";
 import Navigation from "./components/Navbar";
 import Signup from "./pages/Signup";
+import ProjectDetails from "./pages/ProjectDetails";
 
 
 
@@ -52,6 +53,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/project/:projectId" element={<ProjectDetails />} />
             <Route path='/cprojects/create' element={<CreateProject />} />
           </Routes>
         </div>

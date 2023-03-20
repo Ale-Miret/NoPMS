@@ -108,6 +108,9 @@ const resolvers = {
       return await Project.find({}).populate('projectCollaborators');
     },
   // ...
+    project: async (_, { projectId }) => {
+      return await Project.findById(projectId).populate('projectCollaborators');
+    },
   },
   
   
