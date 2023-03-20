@@ -111,6 +111,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_PROJECT } from '../utils/mutations';
 import { Link } from 'react-router-dom';
 import AddCollaborator from './AddCollaborator';
+import Auth from '../utils/auth';
 
 const CreateProject = () => {
     const [formState, setFormState] = useState({
@@ -120,7 +121,7 @@ const CreateProject = () => {
         projectCollaborators: [],
     });
     let navigate = useNavigate();
-    const [createProject, {error, data}] = useMutation(CREATE_PROJECT);
+    const [createProj, {error, data}] = useMutation(CREATE_PROJECT);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -143,18 +144,29 @@ const CreateProject = () => {
         console.log(formState);
 
         try {
-            await createProject({
+            const data = await createProj({
                 variables: {
-                    projectName: formState.projectName,
-                    description: formState.description,
-                    gitHubLink: formState.gitHubLink,
-                    projectCollaborators: formState.projectCollaborators,
+                    ...formState
+                    // projectName: formState.projectName,
+                    // description: formState.description,
+                    // gitHubLink: formState.gitHubLink,
+                    // // projectCollaborators: formState.projectCollaborators,
                 },
             });
+            // Auth.login(data.createProj.token);
             navigate(`/projects`);
+            console.log(`creating: ${formState}`);
+
         } catch (e) {
             console.error(e);
         }
+
+        setFormState({
+            projectName: '',
+            description: '',
+            gitHubLink: '',
+            projectCollaborators: [],
+        });
     };
 
     return (
