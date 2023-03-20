@@ -98,7 +98,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-import DeleteUser from '../components/DeleteUser'; // import DeleteUser component
 import '../Login.css';
 
 const Login = (props) => {
@@ -150,7 +149,6 @@ const Login = (props) => {
                   Success! You may now head{' '}
                   <Link to="/">back to the homepage.</Link>
                 </p>
-                <DeleteUser />
               </div>
             ) : (
               <form onSubmit={handleFormSubmit}>

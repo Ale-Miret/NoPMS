@@ -89,6 +89,8 @@ const jwt = require("jsonwebtoken");
 const secret = "mysecretssshhhhhhh";
 const expiration = "2h";
 
+
+
 const resolvers = {
   Query: {
     allUsers: async () => {return await User.find({})},
@@ -110,6 +112,8 @@ const resolvers = {
       return await Project.findById(projectId).populate('projectCollaborators');
     },
   },
+  
+  
   
   Mutation: {
     // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
@@ -136,6 +140,9 @@ const resolvers = {
 
       return { token, user };
     },
+    
+    
+    
     createProject: async (parent, { projectName, description, gitHubLink, projectCollaborators }, context) => {
       if (context.user) {
         const newProject = await Project.create({
@@ -150,8 +157,12 @@ const resolvers = {
     
         return newProject;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("Error creating project. Please try again later.");
     },
+    
+    
+    
+    
     saveProject: async (parent, { newProject }, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
@@ -165,8 +176,11 @@ const resolvers = {
           }
         );
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("Error saving project. Please try again later.");
     },
+    
+    
+    
     removeProject: async (parent, { projectId }, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
@@ -180,8 +194,10 @@ const resolvers = {
           }
         );
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("Error removing project. Please try again later.");
     },
+    
+    
     
     updateUser: async (parent, { username, email, gitHubUserName, password }, context) => {
       if (context.user) {
@@ -192,29 +208,9 @@ const resolvers = {
         );
         return updatedUser;
       }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    
-   
-
-    deleteUser: async (parent, { _id }, context) => {
-      if (context.user) {
-        const deletedUser = await User.findOneAndDelete({ _id });
-        return deletedUser;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    
+      throw new AuthenticationError("Error updating user. Please try again later.");
+    }
   },
-  
 };
 
 module.exports = resolvers;
-
- // deleteUser: async (parent, args, context) => {
-    //   if (context.user) {
-    //     const deletedUser = await User.findOneAndDelete({ _id: context.user._id });
-    //     return deletedUser;
-    //   }
-    //   throw new AuthenticationError("You need to be logged in!");
-    // },
