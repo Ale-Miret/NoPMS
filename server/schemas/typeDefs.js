@@ -69,6 +69,7 @@ const typeDefs = gql`
     users: [User]
     allUsers: [User]
     projects: [Project]
+    project(projectId: ID!): Project
   }
 
   type Mutation {
@@ -78,7 +79,7 @@ const typeDefs = gql`
     removeProject(projectId: ID): User
     updateUser(_id: ID!, input: UserUpdateInput): User
     deleteUser(_id: ID!): User
-    createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID]): Project
+    createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID!]!): Project
   }
   `;
 
