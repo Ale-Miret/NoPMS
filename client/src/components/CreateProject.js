@@ -114,11 +114,14 @@ import AddCollaborator from './AddCollaborator';
 import Auth from '../utils/auth';
 
 const CreateProject = () => {
+const userId = Auth.getProfile()?.data?._id;
+console.log(userId)
     const [formState, setFormState] = useState({
         projectName: '',
         description: '',
         gitHubLink: '',
         projectCollaborators: [],
+        userId: userId,
     });
     let navigate = useNavigate();
     const [createProj, {error, data}] = useMutation(CREATE_PROJECT);
@@ -166,6 +169,7 @@ const CreateProject = () => {
             description: '',
             gitHubLink: '',
             projectCollaborators: [],
+            userId: '',
         });
     };
 

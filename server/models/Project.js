@@ -16,7 +16,10 @@ const projectSchema = new Schema({
   },
   // projectCollaborators: [collaboratorSchema],
   projectCollaborators: [{ type: Schema.Types.ObjectId, ref: 'Collaborator' }],
-
+  userId: {
+    type: String,
+  required: true,
+  },
 
 });
 
