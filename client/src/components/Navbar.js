@@ -93,7 +93,7 @@ export default function Navigation() {
       >
         Create Project
       </Link>
-                  <Link onClick={Auth.logout}>Logout</Link>
+                  <Link to="/" onClick={Auth.logout}>Logout</Link>
                 </>
               ) : (
                 <>
