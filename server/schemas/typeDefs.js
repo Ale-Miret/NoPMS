@@ -83,7 +83,7 @@ const typeDefs = gql`
     removeProject(projectId: ID): User
     updateUser(_id: ID!, input: UserUpdateInput): User
     createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID], userId: String!): Project
-    addCollaborator(projectId: ID!, userId: ID!, positionName: String!): Collaborator!
+    addCollaborator(projectId: String!, positionName: String!, username: String!, userId: String!): Collaborator
   }
   `;
 

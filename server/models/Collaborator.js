@@ -9,11 +9,8 @@ const collaboratorSchema = new Schema({
         maxLength: 50,
         trim: true,
     },
-    userName: {
-        type: String,
-        required: true,
-        trim: true,
-    },
+    userName: [{type: Schema.Types.ObjectId, ref: 'Project'}],
+    
     assignments: [{ type: Schema.Types.ObjectId, ref: 'Assignment' }],
 });
 
