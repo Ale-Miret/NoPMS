@@ -61,23 +61,125 @@
 // export default Projects;
 
 
+// import React, { useState, useEffect } from 'react';
+// import { useQuery } from '@apollo/client';
+// import ProjectList from '../components/ProjectList';
+// import { GET_PROJECTS } from '../utils/queries';
+// import Auth from '../utils/auth';
+
+
+
+
+// const Projects = () => {
+//   const { loading, error, data } = useQuery(GET_PROJECTS, {
+//     // fetchPolicy: 'network-only',
+//   });
+
+//   const [projects, setProjects] = useState([]);
+//   const userId = Auth.getProfile()?.data?._id;
+
+//   useEffect(() => {
+//     if (data && userId) {
+//       console.log('All projects', data.projects);
+//       console.log("userId", userId);
+//       setProjects(data.projects.filter((project) => {
+//         return project.userId === userId, console.log("project",project.userId);
+//       }));
+//     }
+//   }, [data, userId]);
+//   // console.log("useEffect", useEffect())
+//   console.log("data", data);
+//   useEffect(() => {
+//     console.log("Projects:", projects);
+//   }, [projects]);
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>Error: {error.message}</p>;
+
+//   return (
+//     <div>
+//       <h1>Projects</h1>
+//       <ProjectList projects={projects} />
+//     </div>
+//   );
+// };
+
+
+
+
+// const Projects = () => {
+//   const { loading, error, data } = useQuery(GET_PROJECTS);
+
+//   const [projects, setProjects] = useState([]);
+//   const userId = Auth.getProfile()?.data?._id;
+
+//   useEffect(() => {
+//     if (data && userId) {
+//       console.log('All projects:', data.projects); // log all projects
+//       console.log('User ID:', userId); // log user ID
+//       const filteredProjects = data.projects.filter((project) => {
+//         return project.userId === userId;
+//       });
+//       console.log('Filtered projects:', filteredProjects); // log filtered projects
+//       setProjects(filteredProjects);
+//     }
+//   }, [data, userId]);
+
+//   console.log('Projects:', projects); // log projects
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>Error: {error.message}</p>;
+
+//   return (
+//     <div>
+//       <h1>Projects</h1>
+//       <ProjectList projects={projects} />
+//     </div>
+//   );
+// };
+
+// export default Projects;
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import ProjectList from '../components/ProjectList';
 import { GET_PROJECTS } from '../utils/queries';
+import Auth from '../utils/auth';
+import { useMutation } from '@apollo/client';
+import { REMOVE_PROJECT } from '../utils/mutations';
 
 const Projects = () => {
-  const { loading, error, data } = useQuery(GET_PROJECTS, {
-    fetchPolicy: 'network-only',
-  });
+  const { loading, error, data } = useQuery(GET_PROJECTS);
 
   const [projects, setProjects] = useState([]);
+  const userId = Auth.getProfile()?.data?._id;
+  const [removeProject] = useMutation(REMOVE_PROJECT);
 
   useEffect(() => {
-    if (data) {
-      setProjects(data.projects);
+    if (data && userId) {
+      console.log('All projects:', data.projects); // log all projects
+      console.log('User ID:', userId); // log user ID
+      const filteredProjects = data.projects.filter((project) => {
+        return project.userId === userId;
+      });
+      console.log('Filtered projects:', filteredProjects); // log filtered projects
+      setProjects(filteredProjects);
     }
-  }, [data]);
+  }, [data, userId]);
+
+  console.log('Projects:', projects); // log projects
+
+  const handleDeleteProject = async (projectId) => {
+    try {
+      await removeProject({
+        variables: { projectId },
+      });
+      // remove the deleted project from state
+      const updatedProjects = projects.filter((project) => project._id !== projectId);
+      setProjects(updatedProjects);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -85,7 +187,7 @@ const Projects = () => {
   return (
     <div>
       <h1>Projects</h1>
-      <ProjectList projects={projects} />
+      <ProjectList projects={projects} handleDeleteProject={handleDeleteProject} />
     </div>
   );
 };

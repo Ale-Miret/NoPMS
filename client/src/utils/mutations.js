@@ -39,9 +39,28 @@ mutation AddUser($username: String!, $email: String!, $gitHubUserName: String!, 
 // `;
 
 export const CREATE_PROJECT = gql`
-  mutation createProject($projectName: String!, $description: String!, $gitHubLink: String!) {
-    createProject(projectName: $projectName, description: $description, gitHubLink: $gitHubLink) {
+  mutation createProject(
+    $projectName: String!
+    $description: String!
+    $gitHubLink: String!
+    $projectCollaborators: [ID]
+    $userId: String!
+  ) {
+    createProject(
+      projectName: $projectName
+      description: $description
+      gitHubLink: $gitHubLink
+      projectCollaborators: $projectCollaborators
+      userId: $userId
+    ) {
       _id
+      projectName
+      description
+      gitHubLink
+      projectCollaborators{
+        _id
+        userName
+      }
     }
   }
 `;
@@ -59,3 +78,21 @@ export const CREATE_PROJECT = gql`
 //     }
 //   }
 // `;
+export const DELETE_PROJECT = gql`
+  mutation deleteProject($projectId: ID!) {
+    removeProject(projectId: $projectId) {
+      savedProjects {
+        _id
+        projectName
+        description
+        gitHubLink
+        projectCollaborators {
+          _id
+          userName
+        }
+      }
+    }
+  }
+`;
+
+export const REMOVE_PROJECT = DELETE_PROJECT;

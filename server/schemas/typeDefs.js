@@ -15,6 +15,7 @@ const typeDefs = gql`
     description: String
     gitHubLink: String
     projectCollaborators: [Collaborator]
+    userId: String
   }
 
   type Collaborator {
@@ -36,6 +37,7 @@ const typeDefs = gql`
     description: String
     gitHubLink: String
     projectCollaborators: [CollaboratorInput]
+    userId: String
   }
 
   input CollaboratorInput {
@@ -78,7 +80,7 @@ const typeDefs = gql`
     saveProject(projectData: ProjectInput): User
     removeProject(projectId: ID): User
     updateUser(_id: ID!, input: UserUpdateInput): User
-    createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID]): Project
+    createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID], userId: String!): Project
   }
   `;
 

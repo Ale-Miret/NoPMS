@@ -47,8 +47,24 @@
 // export default ProjectList;
 
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { REMOVE_PROJECT } from "../utils/mutations";
+import { GET_PROJECTS } from "../utils/queries";
 
 const ProjectList = ({ projects }) => {
+  const [removeProject] = useMutation(REMOVE_PROJECT,{
+    refetchQueries: [{ query: GET_PROJECTS }],
+  });
+
+  const handleDeleteProject = async (projectId) => {
+    try {
+      await removeProject({
+        variables: { projectId },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <div>
       {projects.map((project) => (
@@ -64,6 +80,7 @@ const ProjectList = ({ projects }) => {
               <li key={collaborator._id}>{collaborator.userName}</li>
             ))}
           </ul>
+          <button onClick={() => handleDeleteProject(project._id)}>Delete</button>
         </div>
       ))}
     </div>
