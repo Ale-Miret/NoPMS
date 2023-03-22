@@ -108,7 +108,7 @@ const Projects = () => {
   const userId = Auth.getProfile()?.data?._id;
 
   useEffect(() => {
-    if (data) {
+    if (data && userId) {
       console.log('All projects:', data.projects); // log all projects
       console.log('User ID:', userId); // log user ID
       const filteredProjects = data.projects.filter((project) => {

@@ -109,6 +109,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_PROJECT } from '../utils/mutations';
+import { GET_PROJECTS } from '../utils/queries';
 import { Link } from 'react-router-dom';
 import AddCollaborator from './AddCollaborator';
 import Auth from '../utils/auth';
@@ -124,7 +125,9 @@ console.log(userId)
         userId: userId,
     });
     let navigate = useNavigate();
-    const [createProj, {error, data}] = useMutation(CREATE_PROJECT);
+    const [createProj, { error, data }] = useMutation(CREATE_PROJECT, {
+        refetchQueries: [{ query: GET_PROJECTS }],
+      });
 
     const handleChange = (event) => {
         const { name, value } = event.target;
