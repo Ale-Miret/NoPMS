@@ -78,3 +78,21 @@ export const CREATE_PROJECT = gql`
 //     }
 //   }
 // `;
+export const DELETE_PROJECT = gql`
+  mutation deleteProject($projectId: ID!) {
+    removeProject(projectId: $projectId) {
+      savedProjects {
+        _id
+        projectName
+        description
+        gitHubLink
+        projectCollaborators {
+          _id
+          userName
+        }
+      }
+    }
+  }
+`;
+
+export const REMOVE_PROJECT = DELETE_PROJECT;

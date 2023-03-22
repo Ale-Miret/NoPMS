@@ -80,7 +80,7 @@
 const { User, Project, Collaborator } = require("../models");
 
 // import the AuthenticationError object
-const { AuthenticationError } = require("apollo-server-express"); 
+const { AuthenticationError } = require("apollo-server-express");
 
 // import jsonwebtoken
 const jwt = require("jsonwebtoken");
@@ -93,7 +93,7 @@ const expiration = "2h";
 
 const resolvers = {
   Query: {
-    allUsers: async () => {return await User.find({})},
+    allUsers: async () => { return await User.find({}) },
     user: async (_, args) => User.findOne(args),
     users: async (_, args) => User.find(args),
     // get a single user by either their id or their username
@@ -107,14 +107,14 @@ const resolvers = {
     projects: async () => {
       return await Project.find({}).populate('projectCollaborators');
     },
-  // ...
+    // ...
     project: async (_, { projectId }) => {
       return await Project.findById(projectId).populate('projectCollaborators');
     },
   },
-  
-  
-  
+
+
+
   Mutation: {
     // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
     addUser: async (parent, { username, email, gitHubUserName, password }) => {
@@ -140,9 +140,9 @@ const resolvers = {
 
       return { token, user };
     },
-    
-    
-    
+
+
+
     createProject: async (parent, { projectName, description, gitHubLink, projectCollaborators, userId }, context) => {
       if (context.user) {
         const newProject = await Project.create({
@@ -153,17 +153,17 @@ const resolvers = {
           userId,
           owner: context.user._id,
         });
-    
+
         await User.findByIdAndUpdate(context.user._id, { $addToSet: { savedProjects: newProject._id } });
-    
+
         return newProject;
       }
       throw new AuthenticationError("Error creating project. Please try again later.");
     },
-    
-    
-    
-    
+
+
+
+
     saveProject: async (parent, { newProject }, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
@@ -179,27 +179,30 @@ const resolvers = {
       }
       throw new AuthenticationError("Error saving project. Please try again later.");
     },
-    
-    
-    
+
+
     removeProject: async (parent, { projectId }, context) => {
       if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          {
-            $pull: { savedProjects: projectId },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
+        const deletedProject = await Project.findByIdAndDelete(projectId);
+
+        if (!deletedProject) {
+          throw new Error("Failed to delete project");
+        }
+
+        await User.findByIdAndUpdate(
+          context.user._id,
+          { $pull: { savedProjects: projectId } },
+          { new: true }
         );
+
+        return deletedProject;
       }
-      throw new AuthenticationError("Error removing project. Please try again later.");
+      throw new AuthenticationError("You need to be logged in!");
     },
-    
-    
-    
+
+
+
+
     updateUser: async (parent, { username, email, gitHubUserName, password }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
