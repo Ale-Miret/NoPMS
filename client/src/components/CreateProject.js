@@ -206,10 +206,6 @@ const CreateProject = () => {
                                     value={formState.gitHubLink}
                                     onChange={handleChange}
                                 />
-                                {/* WE CAN GET RID OF THIS BR WHEN CSS IS DONE, THIS SEPERATES COLLABS WITH PROJECT INFO */}
-                                <br />
-                                <br />
-                                <AddCollaborator onChange={handleCollaboratorChange} />
                                 <button
                                     className="btn btn-block btn-primary"
                                     style={{ cursor: 'pointer' }}
