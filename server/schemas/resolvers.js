@@ -143,13 +143,14 @@ const resolvers = {
     
     
     
-    createProject: async (parent, { projectName, description, gitHubLink, projectCollaborators }, context) => {
+    createProject: async (parent, { projectName, description, gitHubLink, projectCollaborators, userId }, context) => {
       if (context.user) {
         const newProject = await Project.create({
           projectName,
           description,
           gitHubLink,
           projectCollaborators,
+          userId,
           owner: context.user._id,
         });
     

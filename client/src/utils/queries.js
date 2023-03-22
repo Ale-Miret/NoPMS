@@ -1,18 +1,45 @@
 import { gql } from "@apollo/client";
 
+// export const GET_PROJECTS = gql`
+//   query GetProjects {
+//     projects {
+//       _id
+//       projectName
+//       description
+//       gitHubLink
+//       projectCollaborators {
+//         _id
+//         userName
+//       }
+//       user {
+//         _id
+//         username
+//       }
+//     }
+//   }
+// `;
+
 export const GET_PROJECTS = gql`
-  query GetProjects {
-    projects {
+query GetProjects {
+  projects {
+    _id
+    description
+    gitHubLink
+    projectName
+    userId
+    projectCollaborators {
       _id
-      projectName
-      description
-      gitHubLink
-      projectCollaborators {
-        _id
+      positionName
+      userName
+      assignments {
+        assignedAt
+        taskDesc
+        taskTitle
         userName
       }
     }
   }
+}
 `;
 
 export const GET_PROJECT = gql`

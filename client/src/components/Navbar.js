@@ -70,7 +70,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+// import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import Auth from '../utils/auth';
 
 export default function Navigation() {
@@ -93,7 +93,7 @@ export default function Navigation() {
       >
         Create Project
       </Link>
-                  <Link onClick={Auth.logout}>Logout</Link>
+                  <Link to="/" onClick={Auth.logout}>Logout</Link>
                 </>
               ) : (
                 <>

@@ -109,19 +109,25 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_PROJECT } from '../utils/mutations';
+import { GET_PROJECTS } from '../utils/queries';
 import { Link } from 'react-router-dom';
 import AddCollaborator from './AddCollaborator';
 import Auth from '../utils/auth';
 
 const CreateProject = () => {
+const userId = Auth.getProfile()?.data?._id;
+console.log(userId)
     const [formState, setFormState] = useState({
         projectName: '',
         description: '',
         gitHubLink: '',
         projectCollaborators: [],
+        userId: userId,
     });
     let navigate = useNavigate();
-    const [createProj, {error, data}] = useMutation(CREATE_PROJECT);
+    const [createProj, { error, data }] = useMutation(CREATE_PROJECT, {
+        refetchQueries: [{ query: GET_PROJECTS }],
+      });
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -166,6 +172,7 @@ const CreateProject = () => {
             description: '',
             gitHubLink: '',
             projectCollaborators: [],
+            userId: '',
         });
     };
 
