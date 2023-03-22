@@ -32,3 +32,8 @@ nav a.active {
 nav a:hover {
   color: #999;
 }
+
+.navbar-date {
+  color: white;
+
+}
