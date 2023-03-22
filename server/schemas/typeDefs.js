@@ -19,7 +19,7 @@ const typeDefs = gql`
   }
 
   type Collaborator {
-    _id: ID
+    _id: ID!
     positionName: String
     userName: String
     assignments: [Assignment]
@@ -72,6 +72,8 @@ const typeDefs = gql`
     allUsers: [User]
     projects: [Project]
     project(projectId: ID!): Project
+    userByUsername(username: String!): User
+    collaborators(projectId: ID!): [Collaborator!]!
   }
 
   type Mutation {
@@ -81,6 +83,7 @@ const typeDefs = gql`
     removeProject(projectId: ID): User
     updateUser(_id: ID!, input: UserUpdateInput): User
     createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID], userId: String!): Project
+    addCollaborator(projectId: ID!, userId: ID!, positionName: String!): Collaborator!
   }
   `;
 

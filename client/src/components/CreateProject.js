@@ -275,98 +275,100 @@ const CreateProject = () => {
     });
   };
 
-  const handleCollaboratorChange = (collaborators) => {
-    setFormState({
-      ...formState,
-      projectCollaborators: collaborators,
-    });
-  };
+    const handleCollaboratorChange = (collaborators) => {
+        setFormState({
+            ...formState,
+            projectCollaborators: collaborators,
+        });
+    };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+        console.log(formState);
 
-    try {
-      const data = await createProj({
-        variables: {
-          ...formState,
-        },
-      });
+        try {
+            const data = await createProj({
+                variables: {
+                    ...formState
+                    // projectName: formState.projectName,
+                    // description: formState.description,
+                    // gitHubLink: formState.gitHubLink,
+                    // // projectCollaborators: formState.projectCollaborators,
+                },
+            });
+            // Auth.login(data.createProj.token);
+            navigate(`/projects`);
+            console.log(`creating: ${formState}`);
 
-      navigate(`/projects`);
+        } catch (e) {
+            console.error(e);
+        }
 
-      setFormState({
-        projectName: '',
-        description: '',
-        gitHubLink: '',
-        projectCollaborators: [],
-        userId: '',
-      });
+        setFormState({
+            projectName: '',
+            description: '',
+            gitHubLink: '',
+            projectCollaborators: [],
+        });
+    };
 
-    } catch (e) {
-      console.error(e);
-    }
-  };
+    return (
+        <main className="flex-row justify-center mb-4">
+            <div className="col-12 col-lg-10">
+                <div className="card">
+                    <h4 className="card-header bg-dark text-light p-2">Create Project</h4>
+                    <div className="card-body">
+                        {data ? (
+                            <p>
+                                Success! You may now head{' '}
+                                <Link to="/">back to the homepage.</Link>
+                            </p>
+                        ) : (
+                            <form onSubmit={handleFormSubmit}>
+                                <input
+                                    className="form-input"
+                                    placeholder="Project Title"
+                                    name="projectName"
+                                    type="text"
+                                    value={formState.projectName}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    className="form-input"
+                                    placeholder="Put a description about your project!"
+                                    name="description"
+                                    type="text"
+                                    value={formState.description}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    className="form-input"
+                                    placeholder="Github Link!"
+                                    name="gitHubLink"
+                                    type="text"
+                                    value={formState.gitHubLink}
+                                    onChange={handleChange}
+                                />
+                                <button
+                                    className="btn btn-block btn-primary"
+                                    style={{ cursor: 'pointer' }}
+                                    type="submit"
+                                >
+                                Submit
+                                </button>
+                            </form>
+                        )}
 
-  return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Create Project</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Project Title"
-                  name="projectName"
-                  type="text"
-                  value={formState.projectName}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Put a description about your project!"
-                  name="description"
-                  type="text"
-                  value={formState.description}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Github Link!"
-                  name="gitHubLink"
-                  type="text"
-                  value={formState.gitHubLink}
-                  onChange={handleChange}
-                />
-                <br />
-                <br />
-                <AddCollaborator onChange={handleCollaboratorChange} />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </main>
-  );
+                        {error && (
+                        <div className="my-3 p-3 bg-danger text-white">
+                            {error.message}
+                        </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </main>
+    );
 };
 
 export default CreateProject;

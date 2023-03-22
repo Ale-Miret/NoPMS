@@ -65,6 +65,34 @@ export const CREATE_PROJECT = gql`
   }
 `;
 
+export const ADD_COLLABORATOR = gql`
+  mutation addCollaborator($projectId: ID!, $positionName: String!, $userId: ID!) {
+    addCollaborator(projectId: $projectId, positionName: $positionName, userId: $userId) {
+    _id
+    positionName
+  }
+}
+`;
+// export const ADD_COLLABORATOR = gql`
+//   mutation addCollaborator($projectId: ID!, $positionName: String!, $userId: String!) {
+//     addCollaborator(projectId: $projectId, positionName: $positionName, userId: $userId) {
+//       _id
+//       name
+//       description
+//       projectCollaborators {
+//         _id
+//         positionName
+//         user {
+//           _id
+//           username
+//           email
+//         }
+//       }
+//     }
+//   }
+// `;
+
+
 // export const CREATE_PROJECT = gql`
 //   mutation createProject($projectName: String!, $projectDescription: String!, $projectCollaborators: [CollaboratorInput]!) {
 //     createProject(projectName: $projectName, projectDescription: $projectDescription, projectCollaborators: $projectCollaborators) {
