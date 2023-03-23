@@ -56,3 +56,12 @@ export const GET_PROJECT = gql`
     }
   }
 `;
+
+export const GET_USER_BY_USERNAME = gql`
+  query getUserByUsername($username: String!) {
+    userByUsername(username: $username) {
+      _id
+      username
+    }
+  }
+`;
