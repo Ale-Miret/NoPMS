@@ -79,6 +79,8 @@
 // import user model
 const { User, Project, Collaborator } = require("../models");
 
+const { ObjectId } = require('mongodb');
+
 // import the AuthenticationError object
 const { AuthenticationError } = require("apollo-server-express");
 
@@ -96,13 +98,10 @@ const resolvers = {
     allUsers: async () => { return await User.find({}) },
     user: async (_, args) => User.findOne(args),
     users: async (_, args) => User.find(args),
-    userByUsername: async (parent, { username }, context) => {
+    userByUsername: async (_, { username }) => {
+      console.log(username);
       try {
-        const user = await User.findOne({ username });
-        if (!user) {
-          throw new Error('User not found');
-        }
-        return user.toObject({ getters: true });
+        return await User.findOne({ username });
       } catch (err) {
         console.log(err);
         throw new Error('Something went wrong');
@@ -173,50 +172,65 @@ const resolvers = {
       throw new AuthenticationError("Error creating project. Please try again later.");
     },
 
-    addCollaborator: async (parent, { projectId, positionName, username }, context) => {
+    addCollaborator: async (parent, { projectId, positionName, username, userId }, context) => {
+      console.log(`username: `, username);
+      console.log('project ID: ', projectId);
+      console.log('position Name: ', positionName);
+
       // check if user is logged in
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in to add a collaborator');
       }
-
       try {
         // find the project
-        const project = await Project.findById(projectId);
+        const project = await Project.findById(projectId).populate('projectCollaborators');
+        console.log('Project: ', project);
 
-        // find the user by username
-        const user = await User.findOne({ username });
-
+        // find the user by userId
+        const user = await User.findById(userId);
+        console.log(`user: ${user}`);
+    
         if (!user) {
           throw new Error('User not found');
         }
-
+    
         // check if the user is already a collaborator
-        const isCollaborator = project.collaborators.some(
-          collaborator => collaborator.user.toString() === user._id.toString()
-        );
-
+        const collaborators = project.projectCollaborators || [];
+        const isCollaborator = collaborators.some(collaborator => collaborator.userName.equals(user._id)  && collaborator.projectId.equals(project._id));
+        console.log(`isCollaborator: ${isCollaborator}`);
+    
         if (isCollaborator) {
           throw new Error('User is already a collaborator');
         }
-
+    
         // create a new collaborator object
         const collaborator = new Collaborator({
-          user: user._id,
-          project: project._id,
-          positionName: positionName
+          userName: user._id,
+          projectId: project._id,
+          positionName: positionName,
         });
-
+    
+        // initialize collaborators array if undefined or null
+        if (!project.projectCollaborators) {
+          project.projectCollaborators = [];
+        }
+    
         // add the collaborator to the project
-        project.collaborators.push(collaborator);
-
+        project.projectCollaborators.push(collaborator);
+    
         // save the project and the collaborator
         await project.save();
         await collaborator.save();
-
+    
+        console.log('Project:', project);
+        console.log('Collaborator:', collaborator);
+    
         // return only necessary fields from the collaborator object
         return collaborator.toObject({ getters: true });
       } catch (err) {
         console.log(err);
+        console.log(`addcollab userID err: ${userObjectId}`)
+        console.log(`addcollab username err: ${username}`)
         throw new Error('Something went wrong');
       }
     },

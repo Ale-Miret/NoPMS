@@ -26,7 +26,7 @@ const ProjectDetails = () => {
 
   const { project } = data;
   console.log(project._id)
-
+  console.log(`project collab: ${project.projectCollaborators}`);
 
   return (
     <div>
