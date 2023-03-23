@@ -176,15 +176,16 @@ const resolvers = {
       console.log(`username: `, username);
       console.log('project ID: ', projectId);
       console.log('position Name: ', positionName);
-      
+
       // check if user is logged in
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in to add a collaborator');
       }
       try {
         // find the project
-        const project = await Project.findById(projectId);
-    
+        const project = await Project.findById(projectId).populate('projectCollaborators');
+        console.log('Project: ', project);
+
         // find the user by userId
         const user = await User.findById(userId);
         console.log(`user: ${user}`);
@@ -194,8 +195,9 @@ const resolvers = {
         }
     
         // check if the user is already a collaborator
-        const collaborators = project.collaborators || [];
-        const isCollaborator = collaborators.some(collaborator => collaborator.id === userObjectId);
+        const collaborators = project.projectCollaborators || [];
+        const isCollaborator = collaborators.some(collaborator => collaborator.userName.equals(user._id)  && collaborator.projectId.equals(project._id));
+        console.log(`isCollaborator: ${isCollaborator}`);
     
         if (isCollaborator) {
           throw new Error('User is already a collaborator');
@@ -203,18 +205,18 @@ const resolvers = {
     
         // create a new collaborator object
         const collaborator = new Collaborator({
-          user: user._id,
-          project: project._id,
+          userName: user._id,
+          projectId: project._id,
           positionName: positionName,
         });
     
         // initialize collaborators array if undefined or null
-        if (!project.collaborators) {
-          project.collaborators = [];
+        if (!project.projectCollaborators) {
+          project.projectCollaborators = [];
         }
     
         // add the collaborator to the project
-        project.collaborators.push(collaborator);
+        project.projectCollaborators.push(collaborator);
     
         // save the project and the collaborator
         await project.save();

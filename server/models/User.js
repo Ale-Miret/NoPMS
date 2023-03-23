@@ -22,7 +22,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-
+    
     savedProjects: [{type: Schema.Types.ObjectId, ref: 'Project'}],
   },
   // set this to use virtual below
