@@ -1,6 +1,7 @@
 // Imports
 import React, { useState } from 'react';
 import { useMutation, useLazyQuery } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { ADD_COLLABORATOR } from '../utils/mutations';
 import { GET_PROJECT, GET_USER_BY_USERNAME } from '../utils/queries';
@@ -8,7 +9,7 @@ import Auth from '../utils/auth';
 
 const CollaboratorForm = () => {
   const { projectId } = useParams();
-
+  let navigate = useNavigate();
   const [collaborator, setCollaborator] = useState({
     positionName: '',
     username: '',
@@ -63,6 +64,7 @@ const CollaboratorForm = () => {
     } catch (error) {
       console.error(error);
     }
+    navigate(`/project/${projectId}`);
 
     setCollaborator({
       positionName: '',
