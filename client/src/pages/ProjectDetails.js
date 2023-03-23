@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState, useCallback }  from "react";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_PROJECT } from "../utils/queries";
 import { Link } from "react-router-dom";
+import CommentForm from '../components/CommentForm';
+import Comments from '../components/Comments';
+
 
 const ProjectDetails = () => {
   const { projectId } = useParams();
   const { loading, error, data } = useQuery(GET_PROJECT, {
     variables: { projectId },
   });
+
+// comments
+  const [comments, setComments] = useState([]);
+
+  const addComment = useCallback((newComment) => {
+    setComments([...comments, newComment]);
+  }, [comments]);
+// comments
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -31,6 +42,8 @@ const ProjectDetails = () => {
           <li key={collaborator._id}>{collaborator.userName}</li>
         ))}
       </ul>
+      <CommentForm onAddComment={addComment} />
+      <Comments comments={comments} />
     </div>
   );
 };
