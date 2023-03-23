@@ -66,8 +66,8 @@ export const CREATE_PROJECT = gql`
 `;
 
 export const ADD_COLLABORATOR = gql`
-  mutation addCollaborator($projectId: ID!, $positionName: String!, $userId: ID!) {
-    addCollaborator(projectId: $projectId, positionName: $positionName, userId: $userId) {
+  mutation addCollaborator($projectId: String!, $positionName: String!, $username: String!, $userId: String!) {
+    addCollaborator(projectId: $projectId, positionName: $positionName, username: $username, userId: $userId) {
     _id
     positionName
   }
