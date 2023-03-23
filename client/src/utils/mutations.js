@@ -92,6 +92,21 @@ export const ADD_COLLABORATOR = gql`
 //   }
 // `;
 
+export const REMOVE_COLLABORATOR = gql`
+  mutation removeCollaborator($projectId: ID!, $userId: ID!) {
+    removeCollaborator(projectId: $projectId, userId: $userId) {
+      _id
+      projectName
+      description
+      gitHubLink
+      projectCollaborators {
+        _id
+        userName
+      }
+    }
+  }
+`;
+
 
 // export const CREATE_PROJECT = gql`
 //   mutation createProject($projectName: String!, $projectDescription: String!, $projectCollaborators: [CollaboratorInput]!) {
