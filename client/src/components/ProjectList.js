@@ -46,14 +46,41 @@
 
 // export default ProjectList;
 
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { REMOVE_PROJECT } from "../utils/mutations";
-import { GET_PROJECTS } from "../utils/queries";
+import { GET_PROJECTS, GET_USER_BY_ID } from "../utils/queries";
 import { Box, Heading, Text, List, ListItem, Button, Link as ChakraLink, IconButton } from "@chakra-ui/react";
 import { FaGithub, FaEye, FaTrash } from 'react-icons/fa';
 
 const ProjectCard = ({ project, handleDeleteProject }) => {
+  const [userData, setUserData] = useState([]);
+  const [getUser, { data: userIdData }] = useLazyQuery(GET_USER_BY_ID);
+
+  useEffect(() => {
+    if (project) {
+      const collaboratorUserIds = project.projectCollaborators.map(collaborator => collaborator.userName);
+      console.log(`collaboratorUserId: ${collaboratorUserIds}`);
+      const fetchedUserData = [];
+      const getUserData = async () => {
+        try {
+          for (const userId of collaboratorUserIds) {
+            const { data: userData } = await getUser({ variables: { userId } });
+            console.log(`userData: ${JSON.stringify(userData)}`);
+            fetchedUserData.push(userData.userById);
+          }
+          console.log(`fetchedUserData: ${JSON.stringify(fetchedUserData)}`);
+          setUserData(fetchedUserData);
+        } catch (error) {
+          console.error(`Error fetching user data: ${error}`);
+        }
+      };
+      getUserData();
+    }
+  }, [project]);
+
+
   return (
     <Box maxW="" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="md" p={6} mb={8}>
       <Box mb={4}>
@@ -66,8 +93,8 @@ const ProjectCard = ({ project, handleDeleteProject }) => {
       <Box mb={4}>
         <Heading size="sm">Collaborators:</Heading>
         <List spacing={2}>
-          {project.projectCollaborators.map((collaborator) => (
-            <ListItem key={collaborator._id} fontSize="sm">{collaborator.userName}</ListItem>
+          {userData.map((user, index) => (
+            <ListItem key={`${user._id}-${index}`} fontSize="sm">{user.username}</ListItem>
           ))}
         </List>
       </Box>

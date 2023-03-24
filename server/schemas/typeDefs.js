@@ -72,6 +72,7 @@ const typeDefs = gql`
     allUsers: [User]
     projects: [Project]
     project(projectId: ID!): Project
+    userById(userId: ID!): User
     userByUsername(username: String!): User
     collaborators(projectId: ID!): [Collaborator!]!
   }
