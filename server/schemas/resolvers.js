@@ -98,6 +98,7 @@ const resolvers = {
     allUsers: async () => { return await User.find({}) },
     user: async (_, args) => User.findOne(args),
     users: async (_, args) => User.find(args),
+    userById: async (_, { userId }) => User.findOne({ _id: userId.toString() }),
     userByUsername: async (_, { username }) => {
       console.log(username);
       try {
