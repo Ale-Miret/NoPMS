@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_PROJECTS } from '../utils/queries';
 import Auth from '../utils/auth';
+import { Accordion, AccordionItem, AccordionButton, AccordionIcon, Box, AccordionPanel, Divider } from '@chakra-ui/react';
+import { FaGithub } from 'react-icons/fa';
 
 const CollaboratingProjects = ({ projects }) => {
   const [removeProject] = useMutation(REMOVE_PROJECT,{
@@ -21,24 +23,41 @@ const CollaboratingProjects = ({ projects }) => {
     }
   };
   return (
-    <div>
+    <Accordion defaultIndex={[0]} allowMultiple>
+  <AccordionItem>
+    <h2>
+      <AccordionButton _expanded={{bg: 'blue.700', color: 'white '}}>
+        <Box as="span" flex='1' textAlign='center'>
+          Click Me!
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+    </h2>
+    <AccordionPanel pb={4}>
       {projects.map((project) => (
         <div key={project._id}>
           <Link to={`/project/${project._id}`}>
-            <h3>{project.projectName}</h3>
+            <h3 style={{fontWeight: 'bold', fontSize: '20px'}}>{project.projectName}</h3>
           </Link>
           <p>{project.description}</p>
-          <p>GitHub Link: {project.gitHubLink}</p>
-          <h4>Collaborators:</h4>
-          <ul>
+          <br></br>
+          <h4 style={{fontWeight: 'bold'}}>GitHub:</h4>
+          <p> {project.gitHubLink}</p>
+          <br></br>
+          <h4 style={{fontWeight: 'bold'}}>Collaborators:</h4>
+          <li style={{listStyleType: 'none'}}>
             {project.projectCollaborators.map((collaborator) => (
               <li key={collaborator._id}>{collaborator.userName}</li>
             ))}
-          </ul>
+          </li>
+          <br></br>
+          <Divider />
           {/* <button onClick={() => handleRemoveCollab(project._id)}>Delete</button> */}
         </div>
       ))}
-    </div>
+    </AccordionPanel>
+  </AccordionItem>
+  </Accordion>
   );
 };
 
