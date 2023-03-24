@@ -53,6 +53,12 @@ export const GET_PROJECT = gql`
         _id
         userName
       }
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
     }
   }
 `;

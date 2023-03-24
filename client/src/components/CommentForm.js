@@ -1,37 +1,100 @@
-import React, { useState, useEffect } from 'react';
-function CommentForm() {
-  const [comments, setComments] = useState([]);
-  useEffect(() => {
-    const storedComments = localStorage.getItem('comments');
-    if (storedComments) {
-      setComments(JSON.parse(storedComments));
-    }
-  }, []);
-  useEffect(() => {
-    localStorage.setItem('comments', JSON.stringify(comments));
-  }, [comments]);
-  const handleCommentSubmit = (event) => {
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { ADD_COMMENT } from '../utils/mutations';
+import Auth from '../utils/auth';
+
+const CommentForm =({projectId}) => {
+  const [commentText, setCommentText] = useState('');
+  const [characterCount, setCharacterCount] = useState(0);
+
+  const [addComment, { error }] = useMutation(ADD_COMMENT);
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const commentInput = event.target.elements.comment;
-    const newComment = commentInput.value;
-    if (newComment) {
-      setComments([...comments, newComment]);
-      commentInput.value = '';
+
+    try {
+      const { data } = await addComment({
+        variables: {
+          projectId,
+          commentText,
+          commentAuthor: Auth.getProfile().data.username,
+        },
+      });
+
+      setCommentText('');
+    } catch (err) {
+      console.error(err);
     }
   };
+console.log("commentText:", commentText);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === 'commentText' && value.length <= 280) {
+      setCommentText(value);
+      setCharacterCount(value.length);
+    }
+  };
+
   return (
-    <div>
-      <form onSubmit={handleCommentSubmit}>
-        <label htmlFor="comment">Add a comment:</label>
-        <input type="text" id="comment" />
-        <button type="submit">Submit</button>
-      </form>
-      <ul>
-        {comments.map((comment, index) => (
-          <li key={index}>{comment}</li>
-        ))}
-      </ul>
+<div>
+      <h4>What are your thoughts on this thought?</h4>
+
+      {Auth.loggedIn() ? (
+        <>
+          <p
+            className={`m-0 ${
+              characterCount === 280 || error ? 'text-danger' : ''
+            }`}
+          >
+            Character Count: {characterCount}/280
+            {error && <span className="ml-2">{error.message}</span>}
+          </p>
+          <form
+            className="flex-row justify-center justify-space-between-md align-center"
+            onSubmit={handleFormSubmit}
+          >
+            <div className="col-12 col-lg-9">
+              <textarea
+                name="commentText"
+                placeholder="Add your comment..."
+                value={commentText}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange}
+              ></textarea>
+            </div>
+
+            <div className="col-12 col-lg-3">
+              <button className="btn btn-primary btn-block py-3" type="submit">
+                Add Comment
+              </button>
+            </div>
+          </form>
+        </>
+      ) : (
+        <p>
+          You need to be logged in to share your thoughts. Please{' '}
+          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+        </p>
+      )}
     </div>
   );
-}
+};
+
+//     <div>
+//       <form onSubmit={handleCommentSubmit}>
+//         <label htmlFor="comment">Project Messages:</label>
+//         <input type="text" id="comment" />
+//         <button type="submit">Submit</button>
+//       </form>
+//       <ul>
+//         {comments.map((comment, index) => (
+//           <li key={index}>{comment}</li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
 export default CommentForm;

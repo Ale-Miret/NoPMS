@@ -12,13 +12,13 @@ const ProjectDetails = () => {
   const { loading, error, data } = useQuery(GET_PROJECT, {
     variables: { projectId },
   });
-
+  // const projectComments = data?.project || {};
 // comments
-  const [comments, setComments] = useState([]);
+  // const [comments, setComments] = useState([]);
 
-  const addComment = useCallback((newComment) => {
-    setComments([...comments, newComment]);
-  }, [comments]);
+  // const addComment = useCallback((newComment) => {
+  //   setComments([...comments, newComment]);
+  // }, [comments]);
 // comments
 
   if (loading) return <p>Loading...</p>;
@@ -42,8 +42,8 @@ const ProjectDetails = () => {
           <li key={collaborator._id}>{collaborator.userName}</li>
         ))}
       </ul>
-      <CommentForm onAddComment={addComment} />
-      <Comments comments={comments} />
+      <CommentForm projectId={project._id} />
+      <Comments comments={project.comments} />
     </div>
   );
 };
