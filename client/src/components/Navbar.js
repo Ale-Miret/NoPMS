@@ -133,6 +133,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Flex, Spacer, Button } from "@chakra-ui/react";
 import Auth from '../utils/auth';
 
 export default function Navigation() {
@@ -144,28 +145,29 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="navbar">
+    <Flex bg="blue.700" p="4" alignItems="center">
       {Auth.loggedIn() ? (
         <>
-          <Link className={`nav-link ${isActive('/projects')}`} to="/projects">
-            Projects
+          <Link to="/projects" className={`nav-link ${isActive('/projects')}`}>
+            <Button colorScheme="whiteAlpha">Projects</Button>
           </Link>
-          <Link className={`nav-link ${isActive('/cprojects/create')}`} to="/cprojects/create">
-            Create Project
+          <Link to="/cprojects/create" className={`nav-link ${isActive('/cprojects/create')}`}>
+            <Button colorScheme="whiteAlpha" ml="4">Create Project</Button>
           </Link>
-          <Link to="/" onClick={Auth.logout}>Logout</Link>
-          <span className="navbar-date">{currentDate.toDateString()}</span>
+          <Spacer />
+          <Button colorScheme="whiteAlpha" onClick={Auth.logout}>Logout</Button>
         </>
       ) : (
         <>
-          <Link className={`nav-link ${isActive('/')}`} to="/">
-            Login
+          <Link to="/" className={`nav-link ${isActive('/')}`}>
+            <Button colorScheme="whiteAlpha">Login</Button>
           </Link>
-          <Link className={`nav-link ${isActive('/signup')}`} to="/signup">
-            Signup
+          <Link to="/signup" className={`nav-link ${isActive('/signup')}`}>
+            <Button colorScheme="whiteAlpha" ml="4">Signup</Button>
           </Link>
+          <Spacer />
         </>
       )}
-    </nav>
+    </Flex>
   );
 }

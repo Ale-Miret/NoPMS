@@ -142,15 +142,18 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import ProjectList from '../components/ProjectList';
+import CollaboratingProjects from '../components/CollaboratingProjects';
 import { GET_PROJECTS } from '../utils/queries';
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
-import { REMOVE_PROJECT } from '../utils/mutations';
+import { REMOVE_PROJECT, REMOVE_COLLABORATOR } from '../utils/mutations';
+import { Box, Heading } from "@chakra-ui/react";
 
 const Projects = () => {
   const { loading, error, data } = useQuery(GET_PROJECTS);
-
+  const [removeCollaborator] = useMutation(REMOVE_COLLABORATOR);
   const [projects, setProjects] = useState([]);
+  const [collabProjects, setCollabProjects] = useState([]);
   const userId = Auth.getProfile()?.data?._id;
   const [removeProject] = useMutation(REMOVE_PROJECT);
 
@@ -161,12 +164,26 @@ const Projects = () => {
       const filteredProjects = data.projects.filter((project) => {
         return project.userId === userId;
       });
+
+      const filteredCollabProjects = data.projects.filter((project) => {
+        return project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
+      });
+
+      // const filteredCollabProjects = data.projects.filter((project) => {
+      //   return project.projectCollaborators && project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
+      // });
+
+      // const filteredCollabProjects = []
+
       console.log('Filtered projects:', filteredProjects); // log filtered projects
+      console.log('filteredCollabProjects:', filteredCollabProjects);// log filtered Collaborative Projects
       setProjects(filteredProjects);
+      setCollabProjects(filteredCollabProjects);
     }
   }, [data, userId]);
 
   console.log('Projects:', projects); // log projects
+  console.log('collabProjects:', collabProjects); // log projects
 
   const handleDeleteProject = async (projectId) => {
     try {
@@ -181,14 +198,77 @@ const Projects = () => {
     }
   };
 
+  // const handleRemoveCollab = async (projectId) => {
+  //   try {
+  //     await removeProject({
+  //       variables: { projectId },
+  //     });
+  //     // remove the deleted project from state
+  //     const updatedProjects = projects.filter((project) => project._id !== projectId);
+  //     setProjects(updatedProjects);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  
+  const handleRemoveCollab = async (projectId, userId) => {
+    try {
+      await removeProject({
+        variables: {
+          projectId,
+          collaboratorId: userId,
+        },
+      });
+      // remove the logged-in user from the collaborators array of the project
+      const updatedCollabProjects = collabProjects.map((project) => {
+        if (project._id === projectId) {
+          return {
+            ...project,
+            projectCollaborators: project.projectCollaborators.filter(
+              (collaborator) => collaborator._id !== userId
+            ),
+          };
+        }
+        return project;
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
+  
+  
+  
+  
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div>
-      <h1>Projects</h1>
-      <ProjectList projects={projects} handleDeleteProject={handleDeleteProject} />
-    </div>
+    <Box position="relative" overflow="hidden">
+      <Box
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: "100%",
+          height: "100%",
+          background: "linear-gradient(45deg, rgba(255,0,255,1) 0%, rgba(0,255,255,1) 100%)",
+          opacity: 0.8,
+          zIndex: -1,
+        }}
+      />
+      <Box maxW="800px" mx="auto" p={4}>
+        <Box>
+          <Heading as="h1" size="xl" mb={8}>My Projects</Heading>
+          <ProjectList projects={projects} handleDeleteProject={handleDeleteProject} />
+        </Box>
+        <Box>
+          <Heading as="h1" size="xl" mb={8}>Collaborative Projects</Heading>
+          <CollaboratingProjects projects={collabProjects} handleRemoveCollab={handleRemoveCollab} />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

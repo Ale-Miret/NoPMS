@@ -98,7 +98,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-import '../Login.css';
+import { Box, Heading, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -138,55 +138,49 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
-            {data ? (
-              <div>
-                <p>
-                  Success! You may now head{' '}
-                  <Link to="/">back to the homepage.</Link>
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </main>
+    <Box maxW="600px" mx="auto" mt={8} p={4}>
+      <Heading as="h1" size="xl" textAlign="center" mb={8}>Login</Heading>
+      <FormControl id="email" mb={4}>
+        <FormLabel>Email</FormLabel>
+        <Input
+          type="email"
+          placeholder="Your email"
+          name="email"
+          value={formState.email}
+          onChange={handleChange}
+        />
+      </FormControl>
+      <FormControl id="password" mb={4}>
+        <FormLabel>Password</FormLabel>
+        <Input
+          type="password"
+          placeholder="******"
+          name="password"
+          value={formState.password}
+          onChange={handleChange}
+        />
+      </FormControl>
+      <Button
+        colorScheme="blue"
+        size="lg"
+        width="100%"
+        mt={4}
+        onClick={handleFormSubmit}
+        disabled={!formState.email || !formState.password}
+      >
+        Submit
+      </Button>
+      {error && (
+        <Box mt={4} p={4} bg="red.500" color="white">
+          {error.message}
+        </Box>
+      )}
+      {data && (
+        <Box mt={4} p={4} bg="green.500" color="white">
+          Success! You may now head <Link to="/">back to the homepage.</Link>
+        </Box>
+      )}
+    </Box>
   );
 };
 
