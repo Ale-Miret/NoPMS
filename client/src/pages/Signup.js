@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
+import { Box, Heading, Input, Button, Center } from '@chakra-ui/react';
 
 import Auth from '../utils/auth';
 
@@ -42,11 +43,11 @@ const Signup = () => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
+    <Box maxW="600px" mx="auto" mt={8} p={4}>
+      <Box className="col-12 col-lg-10">
+        <Box boxShadow="md" rounded="md" bg="white">
+          <Heading className="bg-dark text-light p-2" size="md">Sign Up</Heading>
+          <Box p={4}>
             {data ? (
               <p>
                 Success! You may now head{' '}
@@ -54,57 +55,63 @@ const Signup = () => {
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
-                <input
+                <Input
                   className="form-input"
                   placeholder="Your username"
                   name="username"
                   type="text"
                   value={formState.name}
                   onChange={handleChange}
+                  mb={2}
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
+                  mb={2}
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="Your GitHub User Name"
                   name="gitHubUserName"
                   type="text"
                   value={formState.gitHubUserName}
                   onChange={handleChange}
+                  mb={2}
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="******"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
+                  mb={2}
                 />
-                <button
+                <Button
                   className="btn btn-block btn-primary"
                   style={{ cursor: 'pointer' }}
                   type="submit"
+                  colorScheme="blue"
+                  mt={2}
                 >
                   Submit
-                </button>
+                </Button>
               </form>
             )}
-
+  
             {error && (
-              <div className="my-3 p-3 bg-danger text-white">
+              <Box className="my-3 p-3" bg="red.500" color="white">
                 {error.message}
-              </div>
+              </Box>
             )}
-          </div>
-        </div>
-      </div>
-    </main>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

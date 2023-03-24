@@ -147,6 +147,7 @@ import { GET_PROJECTS } from '../utils/queries';
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { REMOVE_PROJECT, REMOVE_COLLABORATOR } from '../utils/mutations';
+import { Box, Heading } from "@chakra-ui/react";
 
 const Projects = () => {
   const { loading, error, data } = useQuery(GET_PROJECTS);
@@ -244,16 +245,30 @@ const Projects = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <>
-    <div>
-      <h1>My Projects</h1>
-      <ProjectList projects={projects} handleDeleteProject={handleDeleteProject} />
-    </div>
-    <div>
-    <h1>Collaborative Projects</h1>
-    <CollaboratingProjects projects={collabProjects} handleRemoveCollab={handleRemoveCollab} />
-  </div>
-  </>
+    <Box position="relative" overflow="hidden">
+      <Box
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: "100%",
+          height: "100%",
+          background: "linear-gradient(45deg, rgba(255,0,255,1) 0%, rgba(0,255,255,1) 100%)",
+          opacity: 0.8,
+          zIndex: -1,
+        }}
+      />
+      <Box maxW="800px" mx="auto" p={4}>
+        <Box>
+          <Heading as="h1" size="xl" mb={8}>My Projects</Heading>
+          <ProjectList projects={projects} handleDeleteProject={handleDeleteProject} />
+        </Box>
+        <Box>
+          <Heading as="h1" size="xl" mb={8}>Collaborative Projects</Heading>
+          <CollaboratingProjects projects={collabProjects} handleRemoveCollab={handleRemoveCollab} />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
