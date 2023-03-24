@@ -5,6 +5,7 @@ import { GET_PROJECT } from "../utils/queries";
 import { Link } from "react-router-dom";
 import CommentForm from '../components/CommentForm';
 import Comments from '../components/Comments';
+import { Box, Heading, Text, UnorderedList, ListItem, Button, } from "@chakra-ui/react";
 
 
 const ProjectDetails = () => {
@@ -29,22 +30,42 @@ const ProjectDetails = () => {
   console.log(`project collab: ${project.projectCollaborators}`);
 
   return (
-    <div>
-      <h1>{project.projectName}</h1>
-      <p>{project.description}</p>
-      <p>GitHub Link: {project.gitHubLink}</p>
+    <Box position="relative" overflow="hidden">
+    <Box
+      style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        background: "linear-gradient(45deg, rgba(255,0,255,1) 0%, rgba(0,255,255,1) 100%)",
+        opacity: 0.8,
+        zIndex: -1,
+      }}
+    />
+    <Box maxW="800px" mx="auto" p={4}>
+      <Heading as="h1" size="xl" mb={4}>
+        {project.projectName}
+      </Heading>
+      <Text mb={4}>{project.description}</Text>
+      <Text mb={4}>GitHub Link: {project.gitHubLink}</Text>
       <Link to={`/project/${project._id}/collaborators`}>
-            <button>Add Collaborator</button>
-          </Link>
-      <h2>Collaborators:</h2>
-      <ul>
+        <Button colorScheme="blue" mb={4}>
+          Add Collaborator
+        </Button>
+      </Link>
+      <Heading as="h2" size="lg" mb={4}>
+        Collaborators:
+      </Heading>
+      <UnorderedList mb={4}>
         {project.projectCollaborators.map((collaborator) => (
-          <li key={collaborator._id}>{collaborator.userName}</li>
+          <ListItem key={collaborator._id}>{collaborator.userName}</ListItem>
         ))}
-      </ul>
+      </UnorderedList>
       <CommentForm onAddComment={addComment} />
       <Comments comments={comments} />
-    </div>
+    </Box>
+  </Box>
   );
 };
 
