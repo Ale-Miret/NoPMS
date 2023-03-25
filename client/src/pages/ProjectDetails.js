@@ -26,34 +26,27 @@ const ProjectDetails = () => {
   // }, [comments]);
 // comments
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const { project } = data;
-  console.log(project._id)
-  console.log(`project collab: ${project.projectCollaborators}`);
-
-//   return (
-//     <div>
-//       <h1>{project.projectName}</h1>
-//       <p>{project.description}</p>
-//       <p>GitHub Link: {project.gitHubLink}</p>
-//       <Link to={`/project/${project._id}/collaborators`}>
-//             <button>Add Collaborator</button>
-//           </Link>
-//       <h2>Collaborators:</h2>
-//       <ul>
-//         {project.projectCollaborators.map((collaborator) => (
-//           <li key={collaborator._id}>{collaborator.userName}</li>
-//         ))}
-//       </ul>
-//       <CommentForm projectId={project._id} />
-//       <Comments comments={project.comments} />
-//     </div>
-//   );
-// };
-
-// export default ProjectDetails;
+  useEffect(() => {
+    if (data && data.project) {
+      const collaboratorUserIds = data.project.projectCollaborators.map(collaborator => collaborator.userName);
+      console.log(`collaboratorUserId: ${collaboratorUserIds}`);
+      const fetchedUserData = [];
+      const getUserData = async () => {
+        try {
+          for (const userId of collaboratorUserIds) {
+            const { data: userData } = await getUser({ variables: { userId } });
+            console.log(`userData: ${JSON.stringify(userData)}`);
+            fetchedUserData.push(userData.userById);
+          }
+          console.log(`fetchedUserData: ${JSON.stringify(fetchedUserData)}`);
+          setUserData(fetchedUserData);
+        } catch (error) {
+          console.error(`Error fetching user data: ${error}`);
+        }
+      };
+      getUserData();
+    }
+  }, [data, getUser]);
 
 return (
   <Box position="relative" overflow="hidden">
@@ -92,8 +85,8 @@ return (
               <ListItem key={`${user._id}-${index}`}>{user.username}</ListItem>
             ))}
           </UnorderedList>
-          <CommentForm projectId={project._id} />
-      <Comments comments={project.comments} />
+          <CommentForm projectId={data.project._id} />
+      <Comments comments={data.project.comments} />
         </>
       )}
     </Box>
