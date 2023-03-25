@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Box, FormControl, FormLabel, Input, Button, UnorderedList, ListItem, } from "@chakra-ui/react";
+
 function CommentForm() {
   const [comments, setComments] = useState([]);
   useEffect(() => {
@@ -20,18 +22,22 @@ function CommentForm() {
     }
   };
   return (
-    <div>
+    <Box>
       <form onSubmit={handleCommentSubmit}>
-        <label htmlFor="comment">Add a comment:</label>
-        <input type="text" id="comment" />
-        <button type="submit">Submit</button>
+        <FormControl id="comment" mb={4}>
+          <FormLabel>Add a comment:</FormLabel>
+          <Input type="text" id="comment" />
+        </FormControl>
+        <Button type="submit" colorScheme="blue" mb={4}>
+          Submit
+        </Button>
       </form>
-      <ul>
+      <UnorderedList>
         {comments.map((comment, index) => (
-          <li key={index}>{comment}</li>
+          <ListItem key={index}>{comment}</ListItem>
         ))}
-      </ul>
-    </div>
+      </UnorderedList>
+    </Box>
   );
 }
 export default CommentForm;
