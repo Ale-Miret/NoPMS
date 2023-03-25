@@ -286,8 +286,28 @@ const resolvers = {
         return updatedUser;
       }
       throw new AuthenticationError("Error updating user. Please try again later.");
-    }
+    },
+
+    addComment: async (parent, { projectId, commentText }, context) => {
+      if (context.user) {
+        return Project.findOneAndUpdate(
+          { _id: projectId },
+          {
+            $addToSet: {
+              comments: { commentText, commentAuthor: context.user.username },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
 };
+
+
 
 module.exports = resolvers;

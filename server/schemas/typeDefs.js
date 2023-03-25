@@ -16,6 +16,14 @@ const typeDefs = gql`
     gitHubLink: String
     projectCollaborators: [Collaborator]
     userId: String
+    comments: [Comment]
+  }
+
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
   }
 
   type Collaborator {
@@ -85,6 +93,7 @@ const typeDefs = gql`
     updateUser(_id: ID!, input: UserUpdateInput): User
     createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID], userId: String!): Project
     addCollaborator(projectId: String!, positionName: String!, username: String, userId: String!): Collaborator
+    addComment(projectId: ID!, commentText: String!): Project
   }
   `;
 
