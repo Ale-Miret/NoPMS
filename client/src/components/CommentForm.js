@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_COMMENT } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { Box, FormControl, FormLabel, Input, Button, UnorderedList, ListItem, } from "@chakra-ui/react";
+
 
 const CommentForm =({projectId}) => {
   const [commentText, setCommentText] = useState('');
@@ -23,6 +25,7 @@ const CommentForm =({projectId}) => {
       });
 
       setCommentText('');
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -38,24 +41,14 @@ console.log("commentText:", commentText);
   };
 
   return (
-<div>
-      <h4>What are your thoughts on this thought?</h4>
+<Box>
+      <h4>Project Messages</h4>
 
       {Auth.loggedIn() ? (
         <>
-          <p
-            className={`m-0 ${
-              characterCount === 280 || error ? 'text-danger' : ''
-            }`}
-          >
-            Character Count: {characterCount}/280
-            {error && <span className="ml-2">{error.message}</span>}
-          </p>
-          <form
-            className="flex-row justify-center justify-space-between-md align-center"
-            onSubmit={handleFormSubmit}
-          >
-            <div className="col-12 col-lg-9">
+          <form onSubmit={handleFormSubmit}>
+            <FormControl id="comment" mb={4}>
+          {/* <FormLabel>Add a comment:</FormLabel> */}
               <textarea
                 name="commentText"
                 placeholder="Add your comment..."
@@ -64,13 +57,18 @@ console.log("commentText:", commentText);
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
-            </div>
-
-            <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
-                Add Comment
-              </button>
-            </div>
+              <p
+            className={`m-0 ${
+              characterCount === 280 || error ? 'text-danger' : ''
+            }`}
+          >
+            Character Count: {characterCount}/280
+            {error && <span className="ml-2">{error.message}</span>}
+          </p>
+            </FormControl>
+            <Button type="submit" colorScheme="blue" mb={4}>
+          Submit
+        </Button>
           </form>
         </>
       ) : (
@@ -79,7 +77,7 @@ console.log("commentText:", commentText);
           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
         </p>
       )}
-    </div>
+    </Box>
   );
 };
 

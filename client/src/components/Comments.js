@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, FormControl, FormLabel, Input, Button, UnorderedList, ListItem, } from "@chakra-ui/react";
 
 const Comments = ({ comments = [] }) => {
   if (!comments.length) {
@@ -13,7 +14,7 @@ const Comments = ({ comments = [] }) => {
       >
         Comments
       </h3>
-      <div className="flex-row my-4">
+      <UnorderedList>
         {comments &&
           comments.map((comment) => (
             <div key={comment._id} className="col-12 mb-3 pb-3">
@@ -28,7 +29,7 @@ const Comments = ({ comments = [] }) => {
               </div>
             </div>
           ))}
-      </div>
+      </UnorderedList>
     </>
   );
 };

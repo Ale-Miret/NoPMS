@@ -71,3 +71,18 @@ export const GET_USER_BY_USERNAME = gql`
     }
   }
 `;
+
+export const GET_USER_BY_ID = gql`
+query getUser($userId: ID!) {
+  userById(userId: $userId) {
+    _id
+    username
+    email
+    gitHubUserName
+    savedProjects {
+      _id
+      projectName
+    }
+  }
+}
+`;
