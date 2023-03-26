@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { REMOVE_PROJECT } from "../utils/mutations";
 import { GET_PROJECTS, GET_PROJECT, GET_USER_BY_ID } from '../utils/queries';
 import Auth from '../utils/auth';
-import { Accordion, AccordionItem, AccordionButton, AccordionIcon, Box, AccordionPanel, Divider } from '@chakra-ui/react';
+import { Accordion, AccordionItem, AccordionButton, AccordionIcon, Box, AccordionPanel, Divider, Button } from '@chakra-ui/react';
 import { FaGithub } from 'react-icons/fa';
 
 const CollaboratingList = ({ project, handleDeleteProject }) => {
@@ -36,22 +36,28 @@ const CollaboratingList = ({ project, handleDeleteProject }) => {
   }, [project]);
 
   return (
-    <div>
+    <Box maxW="" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="md" p={6} mb={8}>
         <div>
-          <Link to={`/project/${project._id}`}>
-            <h3>{project.projectName}</h3>
-          </Link>
+            <h3 style={{fontWeight: 'bold', fontSize: '20px'}}>{project.projectName}</h3>
           <p>{project.description}</p>
-          <p>GitHub Link: {project.gitHubLink}</p>
-          <h4>Collaborators:</h4>
+          <br></br>
+          <h4 style={{fontWeight: 'bold'}}>Github:</h4>
+          <p>{project.gitHubLink}</p>
+          <br></br>
+          <h4 style={{fontWeight: 'bold'}}>Collaborators:</h4>
           <ul>
             {userData.map((user, index) => (
-              <li key={`${user._id}-${index}`} fontSize="sm">{user.username}</li>
+              <li style={{listStyleType: 'none'}} key={`${user._id}-${index}`} fontSize="sm">{user.username}</li>
             ))}
           </ul>
+          <Box display="flex" justifyContent="flex-end">
+          <Link to={`/project/${project._id}`} textDecoration="none">
+          <Button size="sm" colorScheme="blue">View Details</Button>
+          </Link>
           {/* <button onClick={() => handleRemoveCollab(project._id)}>Delete</button> */}
+          </Box>
         </div>
-    </div>
+    </Box>
   );
 };
 
