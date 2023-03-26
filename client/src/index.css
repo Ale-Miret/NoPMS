@@ -28,7 +28,7 @@ code {
 .navbar-btn {
   background-color: transparent!important;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
   padding: 10px;
   margin: 0 5px;
   border: none;
@@ -36,10 +36,19 @@ code {
   transition: all 0.2s ease-in-out!important;
 }
 
-.navbar-btn:hover,
+/* .navbar-btn:hover,
 .navbar-btn:active {
   font-size: 18px;
   background-color: black;
   color: #fff;
+} */
+
+.navbar-btn:hover,
+.navbar-btn:focus,
+.navbar-btn:active {
+  font-size: 25px;
+  background-color: black;
+  color: #fff;
+  outline: none;
 }
 

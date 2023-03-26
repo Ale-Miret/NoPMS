@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import { Box, Heading, Input, Button, Center } from '@chakra-ui/react';
+import '../signup.css';
 
 import Auth from '../utils/auth';
 
@@ -43,10 +44,12 @@ const Signup = () => {
   };
 
   return (
+    <div className="signup-container">
     <Box maxW="600px" mx="auto" mt={8} p={4}>
+    <div className="signup-background"></div>
       <Box className="col-12 col-lg-10">
         <Box boxShadow="md" rounded="md" bg="white">
-          <Heading className="bg-dark text-light p-2" size="md">Sign Up</Heading>
+          <Heading as="h1" size="xl" textAlign="center" bg="black" color="white" mb={8}  borderRadius="md" >Sign Up</Heading>
           <Box p={4}>
             {data ? (
               <p>
@@ -92,11 +95,15 @@ const Signup = () => {
                   mb={2}
                 />
                 <Button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                  colorScheme="blue"
-                  mt={2}
+                   bg="black"
+                   color="white"
+                   _hover={{ bg: 'gray.600' }}
+                   size="lg"
+                   width="100%"
+                   mt={4}
+                   onClick={handleFormSubmit}
+                   disabled={!formState.email || !formState.password}
+                   
                 >
                   Submit
                 </Button>
@@ -112,6 +119,7 @@ const Signup = () => {
         </Box>
       </Box>
     </Box>
+    </div>
   );
 };
 
