@@ -2,6 +2,16 @@
   text-align: center;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -27,6 +37,24 @@
 .App-link {
   color: #61dafb;
 }
+
+.footer-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: transparent!important;
+
+}
+
+@media screen and (max-width: 768px) {
+  .footer-container {
+    position: static;
+    margin-top: 50px;
+  }
+}
+
+
 
 @keyframes App-logo-spin {
   from {

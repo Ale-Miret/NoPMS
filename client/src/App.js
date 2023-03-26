@@ -16,6 +16,7 @@ import Navigation from "./components/Navbar";
 import Signup from "./pages/Signup";
 import ProjectDetails from "./pages/ProjectDetails";
 import AddCollaborator from './components/AddCollaborator';
+import Footer from './components/Footer';
 
 
 
@@ -59,6 +60,7 @@ function App() {
               <Route path="/project/:projectId/collaborators" element={<AddCollaborator />} />
               <Route path='/cprojects/create' element={<CreateProject />} />
             </Routes>
+            <Footer />
           </div>
         </Router>
       </ApolloProvider>
