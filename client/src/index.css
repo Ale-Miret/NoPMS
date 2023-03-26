@@ -20,3 +20,26 @@ code {
 .css-1oba6rb {
   text-align: center;
 }
+
+.navbar {
+  background-color: black;
+}
+
+.navbar-btn {
+  background-color: transparent!important;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out!important;
+}
+
+.navbar-btn:hover,
+.navbar-btn:active {
+  font-size: 18px;
+  background-color: black;
+  color: #fff;
+}
+
