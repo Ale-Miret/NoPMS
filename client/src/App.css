@@ -2,14 +2,10 @@
   text-align: center;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
 
 main {
   flex: 1;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -22,6 +18,18 @@ main {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+.gradient-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(45deg, rgba(255, 0, 255, 1) 0%, rgba(0, 255, 255, 1) 100%);
+  opacity: 0.8;
+  z-index: -1;
+}
+
 
 .App-header {
   background-color: #282c34;
@@ -39,7 +47,7 @@ main {
 }
 
 .footer-container {
-  position: fixed;
+  position: static;
   left: 0;
   bottom: 0;
   width: 100%;
