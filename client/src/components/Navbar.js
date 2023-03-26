@@ -131,39 +131,92 @@
 //   );
 // }
 
+// import React, { useState } from 'react';
+// import { Link, useLocation } from 'react-router-dom';
+// import { Flex, Spacer, Button } from "@chakra-ui/react";
+// import Auth from '../utils/auth';
+// import '../index.css';
+
+// export default function Navigation() {
+//   const location = useLocation();
+//   const [currentDate, setCurrentDate] = useState(new Date());
+
+//   const isActive = (path) => {
+//     return path === location.pathname ? 'active' : '';
+//   };
+
+//   return (
+//     <Flex bg="black" p="4" alignItems="center">
+//       {Auth.loggedIn() ? (
+//         <>
+//           <Link to="/projects" className={`nav-link ${isActive('/projects')}`}>
+//             <Button colorScheme="whiteAlpha">Projects</Button>
+//           </Link>
+//           <Link to="/cprojects/create" className={`nav-link ${isActive('/cprojects/create')}`}>
+//             <Button colorScheme="whiteAlpha" ml="4">Create Project</Button>
+//           </Link>
+//           <Spacer />
+//           <Button colorScheme="whiteAlpha" onClick={Auth.logout}>Logout</Button>
+//         </>
+//       ) : (
+//         <>
+//           <Link to="/" className={`nav-link ${isActive('/')}`}>
+//             <Button colorScheme="whiteAlpha">Login</Button>
+//           </Link>
+//           <Link to="/signup" className={`nav-link ${isActive('/signup')}`}>
+//             <Button colorScheme="whiteAlpha" ml="4">Signup</Button>
+//           </Link>
+//           <Spacer />
+//         </>
+//       )}
+//     </Flex>
+//   );
+// }
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Flex, Spacer, Button } from "@chakra-ui/react";
+import { Flex, Spacer, Button } from '@chakra-ui/react';
 import Auth from '../utils/auth';
+import '../index.css';
 
 export default function Navigation() {
   const location = useLocation();
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const isActive = (path) => {
-    return path === location.pathname ? 'active' : '';
+    const currentPath = location.pathname;
+    if (path === currentPath || currentPath.startsWith(`${path}/`)) {
+      return 'active';
+    }
+    return '';
   };
 
+
   return (
-    <Flex bg="blue.700" p="4" alignItems="center">
+    <Flex className="navbar" alignItems="center">
       {Auth.loggedIn() ? (
         <>
           <Link to="/projects" className={`nav-link ${isActive('/projects')}`}>
-            <Button colorScheme="whiteAlpha">Projects</Button>
+            <Button className="navbar-btn">Projects</Button>
           </Link>
           <Link to="/cprojects/create" className={`nav-link ${isActive('/cprojects/create')}`}>
-            <Button colorScheme="whiteAlpha" ml="4">Create Project</Button>
+            <Button className="navbar-btn" ml="4">
+              Create Project
+            </Button>
           </Link>
           <Spacer />
-          <Button colorScheme="whiteAlpha" onClick={Auth.logout}>Logout</Button>
+          <Button className="navbar-btn" onClick={Auth.logout}>
+            Logout
+          </Button>
         </>
       ) : (
         <>
           <Link to="/" className={`nav-link ${isActive('/')}`}>
-            <Button colorScheme="whiteAlpha">Login</Button>
+            <Button className="navbar-btn">Login</Button>
           </Link>
           <Link to="/signup" className={`nav-link ${isActive('/signup')}`}>
-            <Button colorScheme="whiteAlpha" ml="4">Signup</Button>
+            <Button className="navbar-btn" ml="4">
+              Signup
+            </Button>
           </Link>
           <Spacer />
         </>
@@ -171,3 +224,5 @@ export default function Navigation() {
     </Flex>
   );
 }
+
+
