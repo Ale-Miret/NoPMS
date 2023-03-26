@@ -58,6 +58,7 @@ import '../projects.css';
 const ProjectCard = ({ project, handleDeleteProject }) => {
   const [userData, setUserData] = useState([]);
   const [getUser, { data: userIdData }] = useLazyQuery(GET_USER_BY_ID);
+  
 
   useEffect(() => {
     if (project) {
@@ -119,6 +120,7 @@ const ProjectList = ({ projects }) => {
       await removeProject({
         variables: { projectId },
       });
+      window.location.reload(true);
     } catch (err) {
       console.error(err);
     }
