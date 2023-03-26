@@ -47,9 +47,8 @@ const Signup = () => {
     <div className="signup-container">
     <Box maxW="600px" mx="auto" mt={8} p={4}>
     <div className="signup-background"></div>
-      <Box className="col-12 col-lg-10">
-        <Box boxShadow="md" rounded="md" bg="white">
-          <Heading as="h1" size="xl" textAlign="center" bg="black" color="white" mb={8}  borderRadius="md" >Sign Up</Heading>
+      <Box className="signup-card">
+          <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8}  borderRadius="md" >Sign Up</Heading>
           <Box p={4}>
             {data ? (
               <p>
@@ -116,7 +115,6 @@ const Signup = () => {
               </Box>
             )}
           </Box>
-        </Box>
       </Box>
     </Box>
     </div>
