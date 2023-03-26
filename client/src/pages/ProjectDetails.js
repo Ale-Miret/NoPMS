@@ -49,18 +49,9 @@ const ProjectDetails = () => {
   }, [data, getUser]);
 
 return (
-  <Box position="relative" overflow="hidden">
+  <Box position="relative">
     <Box
-      style={{
-        position: "absolute",
-        left: 0,
-        top: 0,
-        width: "100%",
-        height: "100%",
-        background: "linear-gradient(45deg, rgba(255,0,255,1) 0%, rgba(0,255,255,1) 100%)",
-        opacity: 0.8,
-        zIndex: -1,
-      }}
+      className="gradient-bg"
     />
     <Box maxW="800px" mx="auto" p={4}>
       {loading && <Text>Loading...</Text>}

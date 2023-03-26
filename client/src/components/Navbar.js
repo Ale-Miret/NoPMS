@@ -174,9 +174,10 @@
 // }
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Flex, Spacer, Button } from '@chakra-ui/react';
+import { Flex, Spacer, Button, Image } from '@chakra-ui/react';
 import Auth from '../utils/auth';
 import '../index.css';
+import logo from '../images/NoPMS-cropped.png';
 
 export default function Navigation() {
   const location = useLocation();
@@ -193,6 +194,7 @@ export default function Navigation() {
 
   return (
     <Flex className="navbar" alignItems="center">
+      <Image className="navbar-logo" src={logo} alt="NoPMS logo"/>
       {Auth.loggedIn() ? (
         <>
           <Link to="/projects" className={`nav-link ${isActive('/projects')}`}>

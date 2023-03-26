@@ -1,0 +1,28 @@
+.project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  
+  .project-card {
+    background-color: transparent;
+    border: 2px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .project-card h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .project-card p {
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  .project-card:hover {
+    background-color: #f9f9f9;
+  }
+  

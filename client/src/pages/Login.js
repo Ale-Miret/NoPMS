@@ -191,6 +191,7 @@
 // export default Login;
 
 import React, { useState } from 'react';
+import InfoSection from '../components/InfoSection';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
@@ -253,6 +254,7 @@ const Login = (props) => {
           zIndex: -1,
         }}
       />
+      <InfoSection />
       <Box
         className="login-card"
         maxW="600px"
@@ -264,7 +266,7 @@ const Login = (props) => {
         overflow="hidden"
         bg="white"
       >
-        <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8}>Login</Heading>
+        <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8} borderRadius="md">Login</Heading>
         <FormControl id="email" mb={4}>
           <FormLabel>Email</FormLabel>
           <Input
