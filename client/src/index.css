@@ -17,6 +17,14 @@ code {
 
 }
 
+.navbar-logo {
+   background-size: contain;
+  background-repeat: no-repeat;
+  width: 85px;
+  height: 80px;
+  margin-right: 10px;
+}
+
 .css-1oba6rb {
   text-align: center;
 }
