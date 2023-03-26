@@ -161,27 +161,30 @@ const Projects = () => {
     if (data && userId) {
       console.log('All projects:', data.projects); // log all projects
       console.log('User ID:', userId); // log user ID
-      const filteredProjects = data.projects.filter((project) => {
-        return project.userId === userId;
-      });
-
       const filteredCollabProjects = data.projects.filter((project) => {
         return project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
       });
 
-    
+      console.log('filteredCollabProjects:', filteredCollabProjects);// log filtered Collaborative Projects
+      console.log(filteredCollabProjects[0].projectName)
+      console.log(filteredCollabProjects[filteredCollabProjects.length -1].projectName)
+      if(filteredCollabProjects[0].projectName !== null &&filteredCollabProjects[filteredCollabProjects.length -1].projectName !== null){
+      setCollabProjects(filteredCollabProjects);}
+    }
+  }, [data, userId]);
 
-  // const filteredCollabProjects = data.projects.filter((project) => {
-      //   return project.projectCollaborators && project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
-      // });
-
-      // const filteredCollabProjects = []
+  useEffect(() => {
+    if (data && userId) {
+      console.log('All projects:', data.projects); // log all projects
+      console.log('User ID:', userId); // log user ID
+      const filteredProjects = data.projects.filter((project) => {
+        return project.userId === userId;
+      });
 
       console.log('Filtered projects:', filteredProjects); // log filtered projects
       console.log('filteredCollabProjects:', filteredCollabProjects);// log filtered Collaborative Projects
       setProjects(filteredProjects);
       setCollabProjects(filteredCollabProjects);
-      console.log('Projects state after setProjects:', projects); // log state of projects after setProjects
     }
   }, [data, userId]);
 
