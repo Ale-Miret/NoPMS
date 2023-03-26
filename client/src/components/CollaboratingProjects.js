@@ -54,7 +54,6 @@ const CollaboratingList = ({ project, handleDeleteProject }) => {
           <Link to={`/project/${project._id}`} textDecoration="none">
           <Button size="sm" colorScheme="blue">View Details</Button>
           </Link>
-          {/* <button onClick={() => handleRemoveCollab(project._id)}>Delete</button> */}
           </Box>
         </div>
     </Box>
