@@ -173,6 +173,7 @@ const Projects = () => {
   }, [data, userId]);
   
 
+
   useEffect(() => {
     if (data && userId) {
       console.log('All projects:', data.projects); // log all projects
