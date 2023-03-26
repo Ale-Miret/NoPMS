@@ -16,6 +16,35 @@ mutation AddUser($username: String!, $email: String!, $gitHubUserName: String!, 
 }
 `;
 
+export const ADD_COMMENT = gql`
+mutation AddComment($projectId: ID!, $commentText: String!) {
+  addComment(projectId: $projectId, commentText: $commentText) {
+    _id
+    projectName
+    description
+    gitHubLink
+    userId
+    projectCollaborators {
+      _id
+      positionName
+      userName
+      assignments {
+        assignedAt
+        taskDesc
+        taskTitle
+        userName
+      }
+    }
+    comments {
+      _id
+      commentAuthor
+      commentText
+      createdAt
+    }
+  }
+}
+`;
+
 // export const CREATE_PROJECT = gql`
 //   mutation createProject(
 //     $projectName: String!
