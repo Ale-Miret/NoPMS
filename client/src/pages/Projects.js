@@ -245,19 +245,23 @@ const Projects = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Box position="relative" overflow="hidden">
-      <Box
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: "100%",
-          height: "100%",
-          background: "linear-gradient(45deg, rgba(255,0,255,1) 0%, rgba(0,255,255,1) 100%)",
-          opacity: 0.8,
-          zIndex: -1,
-        }}
-      />
+    <Box
+    position="relative"
+    overflow="hidden"
+    height="100vh"
+  >
+    <Box
+      style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        background: "linear-gradient(45deg, rgba(255,0,255,1) 0%, rgba(0,255,255,1) 100%)",
+        opacity: 0.8,
+        zIndex: -1,
+      }}
+    />
       <Box maxW="800px" mx="auto" p={4}>
         <Box>
           <Heading as="h1" size="xl" mb={8}>My Projects</Heading>

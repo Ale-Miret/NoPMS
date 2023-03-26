@@ -196,6 +196,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { Box, Heading, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
+import '../index.css';
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -253,6 +254,7 @@ const Login = (props) => {
         }}
       />
       <Box
+        className="login-card"
         maxW="600px"
         mx="auto"
         mt={8}
@@ -262,7 +264,7 @@ const Login = (props) => {
         overflow="hidden"
         bg="white"
       >
-        <Heading as="h1" size="xl" textAlign="center" bg="black" color="white" mb={8}>Login</Heading>
+        <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8}>Login</Heading>
         <FormControl id="email" mb={4}>
           <FormLabel>Email</FormLabel>
           <Input
