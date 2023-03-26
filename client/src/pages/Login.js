@@ -266,7 +266,7 @@ const Login = (props) => {
         overflow="hidden"
         bg="white"
       >
-        <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8}>Login</Heading>
+        <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8} borderRadius="md">Login</Heading>
         <FormControl id="email" mb={4}>
           <FormLabel>Email</FormLabel>
           <Input
