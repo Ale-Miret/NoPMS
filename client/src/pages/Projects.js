@@ -164,14 +164,14 @@ const Projects = () => {
       const filteredCollabProjects = data.projects.filter((project) => {
         return project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
       });
-
+  
       console.log('filteredCollabProjects:', filteredCollabProjects);// log filtered Collaborative Projects
-      console.log(filteredCollabProjects[0].projectName)
-      console.log(filteredCollabProjects[filteredCollabProjects.length -1].projectName)
-      if(filteredCollabProjects[0].projectName !== null &&filteredCollabProjects[filteredCollabProjects.length -1].projectName !== null){
-      setCollabProjects(filteredCollabProjects);}
+      if(filteredCollabProjects.length > 0 && filteredCollabProjects[0].projectName !== null && filteredCollabProjects[filteredCollabProjects.length -1].projectName !== null){
+        setCollabProjects(filteredCollabProjects);
+      }
     }
   }, [data, userId]);
+  
 
   useEffect(() => {
     if (data && userId) {
@@ -180,12 +180,14 @@ const Projects = () => {
       const filteredProjects = data.projects.filter((project) => {
         return project.userId === userId;
       });
-
+  
       console.log('Filtered projects:', filteredProjects); // log filtered projects
-      if(filteredProjects[0].projectName !== null){
-      setProjects(filteredProjects);}
+      if(filteredProjects.length > 0 && filteredProjects[0].projectName !== null){
+        setProjects(filteredProjects);
+      }
     }
   }, [data, userId]);
+  
 
   console.log('Projects:', projects); // log projects
   console.log('collabProjects:', collabProjects); // log projects
@@ -203,19 +205,6 @@ const Projects = () => {
     }
   };
 
-  // const handleRemoveCollab = async (projectId) => {
-  //   try {
-  //     await removeProject({
-  //       variables: { projectId },
-  //     });
-  //     // remove the deleted project from state
-  //     const updatedProjects = projects.filter((project) => project._id !== projectId);
-  //     setProjects(updatedProjects);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-  
   const handleRemoveCollab = async (projectId, userId) => {
     try {
       await removeProject({
@@ -240,10 +229,6 @@ const Projects = () => {
       console.error(err);
     }
   };
-  
-  
-  
-  
   
 
   if (loading) return <p>Loading...</p>;
