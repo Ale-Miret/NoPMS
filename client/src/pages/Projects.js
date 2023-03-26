@@ -169,7 +169,9 @@ const Projects = () => {
         return project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
       });
 
-      // const filteredCollabProjects = data.projects.filter((project) => {
+    
+
+  // const filteredCollabProjects = data.projects.filter((project) => {
       //   return project.projectCollaborators && project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
       // });
 
@@ -179,6 +181,7 @@ const Projects = () => {
       console.log('filteredCollabProjects:', filteredCollabProjects);// log filtered Collaborative Projects
       setProjects(filteredProjects);
       setCollabProjects(filteredCollabProjects);
+      console.log('Projects state after setProjects:', projects); // log state of projects after setProjects
     }
   }, [data, userId]);
 

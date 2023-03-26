@@ -53,6 +53,7 @@ import { REMOVE_PROJECT } from "../utils/mutations";
 import { GET_PROJECTS, GET_USER_BY_ID } from "../utils/queries";
 import { Box, Heading, Text, List, ListItem, Button, Link as ChakraLink, IconButton } from "@chakra-ui/react";
 import { FaGithub, FaEye, FaTrash } from 'react-icons/fa';
+import '../projects.css';
 
 const ProjectCard = ({ project, handleDeleteProject }) => {
   const [userData, setUserData] = useState([]);
@@ -82,26 +83,26 @@ const ProjectCard = ({ project, handleDeleteProject }) => {
 
 
   return (
-    <Box maxW="" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="md" p={6} mb={8}>
+    <Box maxW="" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="0 0 10px rgba(0, 0, 0, 0.3)" p={6} mb={8} className="project-card">
       <Box mb={4}>
         <Heading size="md">{project.projectName}</Heading>
         <Text fontSize="sm">{project.description}</Text>
       </Box>
       <Box mb={4}>
-        <ChakraLink href={project.gitHubLink} target="_blank" rel="noopener noreferrer">GitHub: {project.gitHubLink}<FaGithub /></ChakraLink>
+        <ChakraLink className='git-user' href={project.gitHubLink} target="_blank" rel="noopener noreferrer">GitHub: {project.gitHubLink}<FaGithub /></ChakraLink>
       </Box>
       <Box mb={4}>
-        <Heading size="sm">Collaborators:</Heading>
+        <Heading size="sm" >Collaborators:</Heading>
         <List spacing={2}>
           {userData.map((user, index) => (
-            <ListItem key={`${user._id}-${index}`} fontSize="sm">{user.username}</ListItem>
+            <ListItem key={`${user._id}-${index}`} className="collaborator-list-item" fontSize="sm" >{user.username}</ListItem>
           ))}
         </List>
       </Box>
       <Box display="flex" justifyContent="space-between">
-        <IconButton icon={<FaTrash />} colorScheme="red" onClick={() => handleDeleteProject(project._id)} />
+        <IconButton icon={<FaTrash />} colorScheme="blue" onClick={() => handleDeleteProject(project._id)} />
         <Link to={`/project/${project._id}`} textDecoration="none">
-          <Button size="sm" colorScheme="blue">View Details</Button>
+          <Button size="sm" colorScheme="pink">View Details</Button>
         </Link>
       </Box>
     </Box>
