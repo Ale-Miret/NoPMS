@@ -166,12 +166,12 @@ const Projects = () => {
       });
 
       console.log('filteredCollabProjects:', filteredCollabProjects);// log filtered Collaborative Projects
-      console.log(filteredCollabProjects[0].projectName)
-      console.log(filteredCollabProjects[filteredCollabProjects.length -1].projectName)
-      if(filteredCollabProjects[0].projectName !== null &&filteredCollabProjects[filteredCollabProjects.length -1].projectName !== null){
-      setCollabProjects(filteredCollabProjects);}
+      if(filteredCollabProjects.length > 0 && filteredCollabProjects[0].projectName !== null && filteredCollabProjects[filteredCollabProjects.length -1].projectName !== null){
+        setCollabProjects(filteredCollabProjects);
+      }
     }
   }, [data, userId]);
+
 
   useEffect(() => {
     if (data && userId) {
@@ -182,9 +182,9 @@ const Projects = () => {
       });
 
       console.log('Filtered projects:', filteredProjects); // log filtered projects
-      console.log('filteredCollabProjects:', filteredCollabProjects);// log filtered Collaborative Projects
-      setProjects(filteredProjects);
-      setCollabProjects(filteredCollabProjects);
+      if(filteredProjects.length > 0 && filteredProjects[0].projectName !== null){
+        setProjects(filteredProjects);
+      }
     }
   }, [data, userId]);
 
