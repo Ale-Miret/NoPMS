@@ -161,26 +161,34 @@ const Projects = () => {
     if (data && userId) {
       console.log('All projects:', data.projects); // log all projects
       console.log('User ID:', userId); // log user ID
-      const filteredProjects = data.projects.filter((project) => {
-        return project.userId === userId;
-      });
-
       const filteredCollabProjects = data.projects.filter((project) => {
         return project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
       });
-
-      // const filteredCollabProjects = data.projects.filter((project) => {
-      //   return project.projectCollaborators && project.projectCollaborators?.some(collaborator => collaborator.userName === userId);
-      // });
-
-      // const filteredCollabProjects = []
-
-      console.log('Filtered projects:', filteredProjects); // log filtered projects
+  
       console.log('filteredCollabProjects:', filteredCollabProjects);// log filtered Collaborative Projects
-      setProjects(filteredProjects);
-      setCollabProjects(filteredCollabProjects);
+      if(filteredCollabProjects.length > 0 && filteredCollabProjects[0].projectName !== null && filteredCollabProjects[filteredCollabProjects.length -1].projectName !== null){
+        setCollabProjects(filteredCollabProjects);
+      }
     }
   }, [data, userId]);
+  
+
+
+  useEffect(() => {
+    if (data && userId) {
+      console.log('All projects:', data.projects); // log all projects
+      console.log('User ID:', userId); // log user ID
+      const filteredProjects = data.projects.filter((project) => {
+        return project.userId === userId;
+      });
+  
+      console.log('Filtered projects:', filteredProjects); // log filtered projects
+      if(filteredProjects.length > 0 && filteredProjects[0].projectName !== null){
+        setProjects(filteredProjects);
+      }
+    }
+  }, [data, userId]);
+  
 
   console.log('Projects:', projects); // log projects
   console.log('collabProjects:', collabProjects); // log projects
@@ -198,19 +206,6 @@ const Projects = () => {
     }
   };
 
-  // const handleRemoveCollab = async (projectId) => {
-  //   try {
-  //     await removeProject({
-  //       variables: { projectId },
-  //     });
-  //     // remove the deleted project from state
-  //     const updatedProjects = projects.filter((project) => project._id !== projectId);
-  //     setProjects(updatedProjects);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-  
   const handleRemoveCollab = async (projectId, userId) => {
     try {
       await removeProject({
@@ -236,28 +231,16 @@ const Projects = () => {
     }
   };
   
-  
-  
-  
-  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Box position="relative" overflow="hidden">
-      <Box
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: "100%",
-          height: "100%",
-          background: "linear-gradient(45deg, rgba(255,0,255,1) 0%, rgba(0,255,255,1) 100%)",
-          opacity: 0.8,
-          zIndex: -1,
-        }}
-      />
+    <Box
+    position="relative"
+    overflow="hidden"
+  >
+    <Box className="gradient-bg"/>
       <Box maxW="800px" mx="auto" p={4}>
         <Box>
           <Heading as="h1" size="xl" mb={8}>My Projects</Heading>

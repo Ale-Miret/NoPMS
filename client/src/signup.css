@@ -4,6 +4,13 @@
     height: 100vh;
   }
   
+  .signup-card {
+    padding: 20px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16)!important;
+    border-radius: 10px;
+    background-color: #ffffff;
+  }
+  
   .signup-background {
     position: absolute;
     left: 0;
@@ -19,11 +26,8 @@
     margin-top: 10px;
   }
   
-  .signup-card {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  
+ 
+
   .signup-button {
     width: 100%;
     margin-top: 10px;
