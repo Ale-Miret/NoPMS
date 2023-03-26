@@ -15,10 +15,19 @@ const typeDefs = gql`
     description: String
     gitHubLink: String
     projectCollaborators: [Collaborator]
+    userId: String
+    comments: [Comment]
+  }
+
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
   }
 
   type Collaborator {
-    _id: ID
+    _id: ID!
     positionName: String
     userName: String
     assignments: [Assignment]
@@ -36,6 +45,7 @@ const typeDefs = gql`
     description: String
     gitHubLink: String
     projectCollaborators: [CollaboratorInput]
+    userId: String
   }
 
   input CollaboratorInput {
@@ -69,6 +79,10 @@ const typeDefs = gql`
     users: [User]
     allUsers: [User]
     projects: [Project]
+    project(projectId: ID!): Project
+    userById(userId: ID!): User
+    userByUsername(username: String!): User
+    collaborators(projectId: ID!): [Collaborator!]!
   }
 
   type Mutation {
@@ -77,8 +91,9 @@ const typeDefs = gql`
     saveProject(projectData: ProjectInput): User
     removeProject(projectId: ID): User
     updateUser(_id: ID!, input: UserUpdateInput): User
-    deleteUser(_id: ID!): User
-    createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID]): Project
+    createProject(projectName: String!, description: String!, gitHubLink: String!, projectCollaborators: [ID], userId: String!): Project
+    addCollaborator(projectId: String!, positionName: String!, username: String, userId: String!): Collaborator
+    addComment(projectId: ID!, commentText: String!): Project
   }
   `;
 

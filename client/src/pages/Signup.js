@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
+import { Box, Heading, Input, Button, Center } from '@chakra-ui/react';
+import '../signup.css';
 
 import Auth from '../utils/auth';
 
@@ -42,11 +44,13 @@ const Signup = () => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
+    <div className="signup-container">
+    <Box maxW="600px" mx="auto" mt={8} p={4}>
+    <div className="signup-background"></div>
+      <Box className="col-12 col-lg-10">
+        <Box boxShadow="md" rounded="md" bg="white">
+          <Heading as="h1" size="xl" textAlign="center" bg="black" color="white" mb={8}  borderRadius="md" >Sign Up</Heading>
+          <Box p={4}>
             {data ? (
               <p>
                 Success! You may now head{' '}
@@ -54,57 +58,68 @@ const Signup = () => {
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
-                <input
+                <Input
                   className="form-input"
                   placeholder="Your username"
                   name="username"
                   type="text"
                   value={formState.name}
                   onChange={handleChange}
+                  mb={2}
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
+                  mb={2}
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="Your GitHub User Name"
                   name="gitHubUserName"
                   type="text"
                   value={formState.gitHubUserName}
                   onChange={handleChange}
+                  mb={2}
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="******"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
+                  mb={2}
                 />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
+                <Button
+                   bg="black"
+                   color="white"
+                   _hover={{ bg: 'gray.600' }}
+                   size="lg"
+                   width="100%"
+                   mt={4}
+                   onClick={handleFormSubmit}
+                   disabled={!formState.email || !formState.password}
+                   
                 >
                   Submit
-                </button>
+                </Button>
               </form>
             )}
-
+  
             {error && (
-              <div className="my-3 p-3 bg-danger text-white">
+              <Box className="my-3 p-3" bg="red.500" color="white">
                 {error.message}
-              </div>
+              </Box>
             )}
-          </div>
-        </div>
-      </div>
-    </main>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+    </div>
   );
 };
 

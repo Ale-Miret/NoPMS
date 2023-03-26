@@ -7,13 +7,15 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-
+import { ChakraProvider } from '@chakra-ui/react'
 
 import Projects from "./pages/Projects";
 import Login from "./pages/Login";
 import CreateProject from "./components/CreateProject";
 import Navigation from "./components/Navbar";
 import Signup from "./pages/Signup";
+import ProjectDetails from "./pages/ProjectDetails";
+import AddCollaborator from './components/AddCollaborator';
 
 
 
@@ -44,19 +46,23 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <Router>
-        <div>
-          <Navigation/>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path='/cprojects/create' element={<CreateProject />} />
-          </Routes>
-        </div>
-      </Router>
-    </ApolloProvider>
+    <ChakraProvider>
+      <ApolloProvider client={client}>
+        <Router>
+          <div>
+            <Navigation/>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/project/:projectId" element={<ProjectDetails />} />
+              <Route path="/project/:projectId/collaborators" element={<AddCollaborator />} />
+              <Route path='/cprojects/create' element={<CreateProject />} />
+            </Routes>
+          </div>
+        </Router>
+      </ApolloProvider>
+    </ChakraProvider>
   );
 }
 
