@@ -28,7 +28,7 @@ const CollaboratingProjects = ({ projects }) => {
     <h2>
       <AccordionButton _expanded={{bg: 'blue.700', color: 'white '}}>
         <Box as="span" flex='1' textAlign='center'>
-          Click Me!
+          Collaborative Projects
         </Box>
         <AccordionIcon />
       </AccordionButton>
