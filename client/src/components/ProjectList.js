@@ -54,6 +54,8 @@ import { GET_PROJECTS, GET_USER_BY_ID } from "../utils/queries";
 import { Box, Heading, Text, List, ListItem, Button, Link as ChakraLink, IconButton } from "@chakra-ui/react";
 import { FaGithub, FaEye, FaTrash } from 'react-icons/fa';
 import '../projects.css';
+import { useProjectContext } from '../components/ProjectContext'; // Add this line
+
 
 const ProjectCard = ({ project, handleDeleteProject }) => {
   const [userData, setUserData] = useState([]);
@@ -115,12 +117,15 @@ const ProjectList = ({ projects }) => {
     refetchQueries: [{ query: GET_PROJECTS }],
   });
 
+  
+  const { toggleProjectUpdateFlag } = useProjectContext();
+
   const handleDeleteProject = async (projectId) => {
     try {
       await removeProject({
         variables: { projectId },
       });
-      window.location.reload(true);
+      toggleProjectUpdateFlag(); // Add this line
     } catch (err) {
       console.error(err);
     }
