@@ -7,9 +7,14 @@ import { ADD_COLLABORATOR } from '../utils/mutations';
 import { GET_PROJECT, GET_USER_BY_USERNAME } from '../utils/queries';
 import Auth from '../utils/auth';
 
+// Searches for the input name while pulling the searched user from DB
 const CollaboratorForm = () => {
   const { projectId } = useParams();
   let navigate = useNavigate();
+  const userId = Auth.getProfile()?.data?.username; // Project owner user
+  // console.log(`userId: ${userId}`);
+
+  // Sets collaborator to be empty
   const [collaborator, setCollaborator] = useState({
     positionName: '',
     username: '',
@@ -17,21 +22,26 @@ const CollaboratorForm = () => {
     projectId,
   });
 
+  // Searches up the user's input
   const [getUser, { data: userData }] = useLazyQuery(GET_USER_BY_USERNAME, {
     variables: { username: collaborator.username },
     skip: collaborator.username === '',
   });
 
+  // Adds the user's input
   const [addCollaborator, { error, data }] = useMutation(ADD_COLLABORATOR, {
     refetchQueries: [{ query: GET_PROJECT, variables: { projectId } }],
     onError: (error) => {
       console.error(error);
     },
-    onCompleted: (data) => {
-      console.log(data);
+    // Takes the user back to the project details page
+    onCompleted: (data) => { 
+      // console.log(data);
+      navigate(`/project/${projectId}`);
     },
   });
 
+  // Handles change in the user's input
   const handleChange = (event) => {
     const { name, value } = event.target;
     setCollaborator({
@@ -40,19 +50,26 @@ const CollaboratorForm = () => {
     });
   };
 
+  // On submit
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(collaborator.username)
+    // console.log(collaborator.username)
 
     try {
+      // Grabs input data and searches
       const { data: userData } = await getUser();
-      console.log('userData:', userData);
-      console.log('collaborator:', collaborator);
 
+      // If user is not found
       if (!userData?.userByUsername?.username) {
         throw new Error('User not found!');
       }
 
+      // If user is trying to add themselves
+      if (userData.userByUsername.username == userId) {
+        throw new Error('You cannot add yourself!');
+      }
+
+      // Takes in variables from user
       await addCollaborator({
         variables: {
             projectId,
@@ -64,8 +81,8 @@ const CollaboratorForm = () => {
     } catch (error) {
       console.error(error);
     }
-    navigate(`/project/${projectId}`);
 
+    // Sets collaborator back to empty
     setCollaborator({
       positionName: '',
       username: '',
@@ -108,7 +125,7 @@ const CollaboratorForm = () => {
         )}
 
         {error && (
-            <div className="my-3 p-3 bg-danger text-white">
+            <div className="my-3 p-3 bg-danger text-black">
                 {error.message}
             </div>
         )}
