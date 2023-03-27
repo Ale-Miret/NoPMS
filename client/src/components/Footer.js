@@ -2,10 +2,11 @@ import React from 'react';
 import { Box, Link, Text } from '@chakra-ui/react';
 
 const Footer = () => {
+  
   return (
-    <Box className="footer-container" bg="gray.200" py={4}>
+    <Box className="footer-container" py={4}>
       <Text textAlign="center" fontSize="sm">
-        &copy; 2023 My Awesome Website. All rights reserved.
+        &copy; 2023 NoPMS. All rights reserved.
       </Text>
       <Text textAlign="center" fontSize="sm">
         Created by &nbsp;
