@@ -197,7 +197,6 @@ export default function Navigation() {
       window.location.reload();
     } else {
       navigation('/projects');
-      window.location.reload();
     }
   };
 
