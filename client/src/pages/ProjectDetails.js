@@ -7,13 +7,15 @@ import { Link as RouterLink } from "react-router-dom";
 import CommentForm from '../components/CommentForm';
 import Comments from '../components/Comments';
 import { Box, Heading, Text, UnorderedList, ListItem, Button, } from "@chakra-ui/react";
+import { useProjectContext } from '../components/ProjectContext';
 
 
 const ProjectDetails = () => {
+  const { projectUpdateFlag } = useProjectContext();
   const { projectId } = useParams();
   const [userData, setUserData] = useState([]);
   const [getUser, { data: userIdData }] = useLazyQuery(GET_USER_BY_ID);
-  const { loading, error, data } = useQuery(GET_PROJECT, {
+  const { loading, error, data, refetch } = useQuery(GET_PROJECT, {
     variables: { projectId },
     fetchPolicy: "no-cache"
   });
@@ -25,6 +27,10 @@ const ProjectDetails = () => {
   //   setComments([...comments, newComment]);
   // }, [comments]);
   // comments
+
+  useEffect(() => {
+    refetch();
+  }, [projectUpdateFlag, refetch]);
 
   useEffect(() => {
     if (data && data.project) {

@@ -104,6 +104,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_COMMENT } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { Box, FormControl, FormLabel, Input, Button, Textarea, UnorderedList, ListItem, Heading, Text  } from "@chakra-ui/react";
+import { useProjectContext } from '../components/ProjectContext';
 
 
 const CommentForm =({projectId}) => {
@@ -111,6 +112,7 @@ const CommentForm =({projectId}) => {
   const [characterCount, setCharacterCount] = useState(0);
 
   const [addComment, { error }] = useMutation(ADD_COMMENT);
+  const { toggleProjectUpdateFlag } = useProjectContext(); 
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -125,7 +127,7 @@ const CommentForm =({projectId}) => {
       });
 
       setCommentText('');
-      window.location.reload();
+      toggleProjectUpdateFlag(); // Add this line
     } catch (err) {
       console.error(err);
     }
