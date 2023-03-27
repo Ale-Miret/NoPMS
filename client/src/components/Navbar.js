@@ -194,10 +194,10 @@ export default function Navigation() {
   };
 
   const handleProjectsClick = () => {
-    if (isActive('/projects')) {
+    if (location.pathname === '/projects') {
+      navigation(`/projects?timestamp=${Date.now()}`);
     } else {
       navigation('/projects');
-      setReloadKey(prevKey => prevKey + 1);
     }
   };
 
@@ -207,7 +207,7 @@ export default function Navigation() {
       <Image className="navbar-logo" src={logo} alt="NoPMS logo"/>
       {Auth.loggedIn() ? (
         <>
-          <Button key={reloadKey} className="navbar-btn" onClick={handleProjectsClick}>
+          <Button className="navbar-btn" onClick={handleProjectsClick}>
             Projects
           </Button>
           <Link to="/cprojects/create" className={`nav-link ${isActive('/cprojects/create')}`}>
