@@ -1,4 +1,4 @@
-// Imports
+// Import Schema and dataFormat to format time
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
