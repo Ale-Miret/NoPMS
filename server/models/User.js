@@ -1,6 +1,6 @@
 // Imports
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // User Schema
 const userSchema = new Schema(

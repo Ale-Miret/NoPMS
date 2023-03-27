@@ -19,15 +19,7 @@ const ProjectDetails = () => {
     variables: { projectId },
     fetchPolicy: "no-cache"
   });
-  // const projectComments = data?.project || {};
-  // comments
-  // const [comments, setComments] = useState([]);
-
-  // const addComment = useCallback((newComment) => {
-  //   setComments([...comments, newComment]);
-  // }, [comments]);
-  // comments
-
+  
   useEffect(() => {
     refetch();
   }, [projectUpdateFlag, refetch]);
