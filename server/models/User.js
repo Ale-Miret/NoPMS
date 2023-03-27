@@ -1,4 +1,4 @@
-// Imports
+// Import Schema & bcrypt for encrypting passwords
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 

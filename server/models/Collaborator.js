@@ -1,4 +1,4 @@
-// Imports
+// Import Schema
 const { Schema, model } = require('mongoose');
 
 // Collaborator Schema
