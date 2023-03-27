@@ -1,60 +1,12 @@
-// import React from "react";
-
-// const ProjectList = ({ projects }) => {
-//   return (
-//     <ul>
-//       {projects.map((project) => (
-//         <li key={project._id}>
-//           <h2>{project.projectName}</h2>
-//           <p>{project.description}</p>
-//           <a href={project.gitHubLink}>GitHub Link</a>
-//           <ul>
-//             {project.projectCollaborators.map((collaborator) => (
-//               <li key={collaborator._id}>{collaborator.name}</li>
-//             ))}
-//           </ul>
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// };
-
-// export default ProjectList;
-
-
-// import React from 'react';
-
-// const ProjectList = ({ projects }) => {
-//   return (
-//     <div>
-//       {projects.map((project) => (
-//         <div key={project._id}>
-//           <h3>{project.projectName}</h3>
-//           <p>{project.description}</p>
-//           <a href={project.gitHubLink}>GitHub Link</a>
-//           <p>Collaborators:</p>
-//           <ul>
-//             {project.projectCollaborators.map((collaborator) => (
-//               <li key={collaborator._id}>{collaborator.userName}</li>
-//             ))}
-//           </ul>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default ProjectList;
-
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { REMOVE_PROJECT } from "../utils/mutations";
 import { GET_PROJECTS, GET_USER_BY_ID } from "../utils/queries";
 import { Box, Heading, Text, List, ListItem, Button, Link as ChakraLink, IconButton } from "@chakra-ui/react";
-import { FaGithub, FaEye, FaTrash } from 'react-icons/fa';
+import { FaGithub, FaTrash } from 'react-icons/fa';
 import '../projects.css';
-import { useProjectContext } from '../components/ProjectContext'; // Add this line
+import { useProjectContext } from '../components/ProjectContext'; // 
 
 
 const ProjectCard = ({ project, handleDeleteProject }) => {
@@ -125,7 +77,7 @@ const ProjectList = ({ projects }) => {
       await removeProject({
         variables: { projectId },
       });
-      toggleProjectUpdateFlag(); // Add this line
+      toggleProjectUpdateFlag(); 
     } catch (err) {
       console.error(err);
     }

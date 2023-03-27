@@ -1,11 +1,15 @@
+// Import Schema and dataFormat to format time
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
+// Project Schema
 const projectSchema = new Schema({
+  // projectName is a String Input
   projectName: {
       type: String,
       required: true,
     },
+  // description is a String Input allowing the user to describe the project
   description: {
     type: String,
     required: true,
@@ -15,12 +19,16 @@ const projectSchema = new Schema({
     type: String,
     required: true,
   },
-  // projectCollaborators: [collaboratorSchema],
+  // projectCollaborators refers to the Collaborator's ID that is attached to the project
   projectCollaborators: [{ type: Schema.Types.ObjectId, ref: 'Collaborator' }],
+
+  // userID is a string ready to attach to a user's ID
   userId: {
     type: String,
   required: true,
   },
+
+  // comments allows the project owner and collaborators to comment on projects together
   comments: [
     {
       commentText: {
