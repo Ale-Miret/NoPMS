@@ -197,6 +197,7 @@ export default function Navigation({ setForceUpdateKey }) {
       setForceUpdateKey(prevKey => prevKey + 1);
     } else {
       navigation('/projects');
+      setForceUpdateKey(prevKey => prevKey + 1);
     }
   };
 
