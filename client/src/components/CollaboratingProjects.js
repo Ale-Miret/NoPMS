@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { REMOVE_PROJECT } from "../utils/mutations";
 import { GET_PROJECTS, GET_PROJECT, GET_USER_BY_ID } from '../utils/queries';
 import Auth from '../utils/auth';
-import { Accordion, AccordionItem, AccordionButton, AccordionIcon, Box, AccordionPanel, Divider, Button } from '@chakra-ui/react';
+import { Accordion, AccordionItem, AccordionButton, AccordionIcon, Box, AccordionPanel, Divider, Button, Link as ChakraLink, List, ListItem} from '@chakra-ui/react';
 import { FaGithub } from 'react-icons/fa';
 
 const CollaboratingList = ({ project, handleDeleteProject }) => {
@@ -36,23 +36,23 @@ const CollaboratingList = ({ project, handleDeleteProject }) => {
   }, [project]);
 
   return (
-    <Box maxW="" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="md" p={6} mb={8}>
+    <Box maxW="" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="0 0 10px rgba(0, 0, 0, 0.3)" p={6} mb={8} className="project-card">
         <div>
             <h3 style={{fontWeight: 'bold', fontSize: '20px'}}>{project.projectName}</h3>
           <p>{project.description}</p>
           <br></br>
-          <h4 style={{fontWeight: 'bold'}}>Github:</h4>
-          <p>{project.gitHubLink}</p>
+          <ChakraLink className='git-user' href={project.gitHubLink} target="_blank" rel="noopener noreferrer">Github: {project.gitHubLink}<FaGithub /></ChakraLink>
           <br></br>
           <h4 style={{fontWeight: 'bold'}}>Collaborators:</h4>
-          <ul>
+          <List spacing={2}>
             {userData.map((user, index) => (
-              <li style={{listStyleType: 'none'}} key={`${user._id}-${index}`} fontSize="sm">{user.username}</li>
+              <ListItem style={{listStyleType: 'none'}} key={`${user._id}-${index}`} className="collaborator-list-item" fontSize="sm">{user.username}</ListItem>
             ))}
-          </ul>
-          <Box display="flex" justifyContent="flex-end">
+          </List>
+          <Box display="flex" justifyContent="space-between">
           <Link to={`/project/${project._id}`} textDecoration="none">
-          <Button size="sm" colorScheme="blue">View Details</Button>
+          
+          <Button size="sm" colorScheme="blue" mt={2}>View Details</Button>
           </Link>
           </Box>
         </div>
@@ -79,7 +79,7 @@ const CollaboratingProjects = ({ projects }) => {
     <Accordion defaultIndex={[0]} allowMultiple>
   <AccordionItem>
     <h2>
-      <AccordionButton _expanded={{bg: 'blue.700', color: 'white '}}>
+      <AccordionButton _expanded={{bg: 'black', color: 'white '}}bg="black" color="white">
         <Box as="span" flex='1' textAlign='center'>
           Collaborative Projects
         </Box>
