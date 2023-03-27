@@ -2,8 +2,9 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-// Assignment Schema
+// Assignment Schema - NOT USED
 const assignmentSchema = new Schema({
+
     taskTitle: {
         type: String,
         required: 'A task name needs to be assigned!',

@@ -1,81 +1,3 @@
-// // import user model
-// const { User } = require("../models");
-// // import sign token function from auth
-// const { signToken } = require("../utils/auth");
-
-// const resolvers = {
-//   Query: {
-//     allUsers: async () => {return await User.find({})},
-//     user: async (_, args) => User.findOne(args),
-//   users: async (_, args) => User.find(args),
-//     // get a single user by either their id or their username
-//     me: async (parent, args, context) => {
-//       if (context.user) {
-//         return User.findOne({ _id: context.user._id });
-//       }
-//       throw new AuthenticationError("You need to be logged in!");
-//     },
-//   },
-//   Mutation: {
-//     // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
-//     addUser: async (parent, { username, email, gitHubUserName, password }) => {
-//       const user = await User.create({ username, email, gitHubUserName, password });
-//       const token = signToken(user);
-//       return { token, user };
-//     },
-//     // login a user, sign a token, and send it back (to client/src/components/LoginForm.js)
-//     login: async (parent, { email, password }) => {
-//       const user = await User.findOne({ email });
-
-//       if (!user) {
-//         throw new AuthenticationError("No user found with this email address");
-//       }
-
-//       const correctPw = await user.isCorrectPassword(password);
-
-//       if (!correctPw) {
-//         throw new AuthenticationError("Incorrect credentials");
-//       }
-
-//       const token = signToken(user);
-
-//       return { token, user };
-//     },
-//     saveProject: async (parent, { newProject }, context) => {
-//       if (context.user) {
-//         return User.findOneAndUpdate(
-//           { _id: context.user._id },
-//           {
-//             $addToSet: { savedProjects: newProject },
-//           },
-//           {
-//             new: true,
-//             runValidators: true,
-//           }
-//         );
-//       }
-//       throw new AuthenticationError("You need to be logged in!");
-//     },
-//     removeProject: async (parent, { projectId }, context) => {
-//       if (context.user) {
-//         return Thought.findOneAndUpdate(
-//           { _id: context.user._id },
-//           {
-//             $pull: { savedProjects: projectId },
-//           },
-//           {
-//             new: true,
-//             runValidators: true,
-//           }
-//         );
-//       }
-//       throw new AuthenticationError("You need to be logged in!");
-//     },
-//   },
-// };
-
-// module.exports = resolvers;
-
 // import user model
 const { User, Project, Collaborator } = require("../models");
 
@@ -95,12 +17,16 @@ const expiration = "2h";
 
 const resolvers = {
   Query: {
+    // Simple Query
     allUsers: async () => { return await User.find({}) },
     user: async (_, args) => User.findOne(args),
     users: async (_, args) => User.find(args),
+
+    // Searches a user by an ID input
     userById: async (_, { userId }) => User.findOne({ _id: userId.toString() }),
+
+    // Searches a user by a username input
     userByUsername: async (_, { username }) => {
-      console.log(username);
       try {
         return await User.findOne({ username });
       } catch (err) {
@@ -108,6 +34,7 @@ const resolvers = {
         throw new Error('Something went wrong');
       }
     },
+
     // get a single user by either their id or their username
     me: async (parent, args, context) => {
       if (context.user) {
@@ -115,11 +42,13 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    // ...
+
+    // Searches all projects associated with the user
     projects: async () => {
       return await Project.find({}).populate('projectCollaborators');
     },
-    // ...
+
+    // Searches for a specific project
     project: async (_, { projectId }) => {
       return await Project.findById(projectId).populate('projectCollaborators');
     },
@@ -153,8 +82,7 @@ const resolvers = {
       return { token, user };
     },
 
-
-
+    // Creates a project based on the Name, Description, github, and userID to build a project 
     createProject: async (parent, { projectName, description, gitHubLink, projectCollaborators, userId }, context) => {
       if (context.user) {
         const newProject = await Project.create({
@@ -173,10 +101,8 @@ const resolvers = {
       throw new AuthenticationError("Error creating project. Please try again later.");
     },
 
+    // Adds a collaborator to a project based on projectId, positionName, and username
     addCollaborator: async (parent, { projectId, positionName, username, userId }, context) => {
-      console.log(`username: `, username);
-      console.log('project ID: ', projectId);
-      console.log('position Name: ', positionName);
 
       // check if user is logged in
       if (!context.user) {
@@ -185,11 +111,9 @@ const resolvers = {
       try {
         // find the project
         const project = await Project.findById(projectId).populate('projectCollaborators');
-        console.log('Project: ', project);
 
         // find the user by userId
         const user = await User.findById(userId);
-        console.log(`user: ${user}`);
     
         if (!user) {
           throw new Error('User not found');
@@ -198,7 +122,6 @@ const resolvers = {
         // check if the user is already a collaborator
         const collaborators = project.projectCollaborators || [];
         const isCollaborator = collaborators.some(collaborator => collaborator.userName.equals(user._id)  && collaborator.projectId.equals(project._id));
-        console.log(`isCollaborator: ${isCollaborator}`);
     
         if (isCollaborator) {
           throw new Error('User is already a collaborator');
@@ -223,20 +146,15 @@ const resolvers = {
         await project.save();
         await collaborator.save();
     
-        console.log('Project:', project);
-        console.log('Collaborator:', collaborator);
-    
         // return only necessary fields from the collaborator object
         return collaborator.toObject({ getters: true });
       } catch (err) {
         console.log(err);
-        console.log(`addcollab userID err: ${userObjectId}`)
-        console.log(`addcollab username err: ${username}`)
         throw new Error('Something went wrong');
       }
     },
 
-
+    // Saves project to the user based on userId and newProject data
     saveProject: async (parent, { newProject }, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
@@ -253,7 +171,7 @@ const resolvers = {
       throw new AuthenticationError("Error saving project. Please try again later.");
     },
 
-
+    // Removes Projects based on projectId
     removeProject: async (parent, { projectId }, context) => {
       if (context.user) {
         const deletedProject = await Project.findByIdAndDelete(projectId);
@@ -273,9 +191,7 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-
-
-
+    // Updates user based on userId and updates the username, email, github username, and/or password
     updateUser: async (parent, { username, email, gitHubUserName, password }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
@@ -288,6 +204,7 @@ const resolvers = {
       throw new AuthenticationError("Error updating user. Please try again later.");
     },
 
+    // Adds a comment to a project based on context of the user, projectId, and the commentText
     addComment: async (parent, { projectId, commentText }, context) => {
       if (context.user) {
         return Project.findOneAndUpdate(

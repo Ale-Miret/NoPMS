@@ -1,23 +1,28 @@
+// Imports
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
-
+// User Schema
 const userSchema = new Schema(
   {
+    // String Input for username
     username: {
       type: String,
       required: true,
       unique: true,
     },
+    // String Input for email with Regex email matching
     email: {
       type: String,
       required: true,
       unique: true,
       match: [/.+@.+\..+/, 'Must use a valid email address'],
     },
+    // String Input for github username
     gitHubUserName: {
-        type: String,
-        },
+      type: String,
+    },
+    // String Input for github password
     password: {
       type: String,
       required: true,
