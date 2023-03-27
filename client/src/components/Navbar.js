@@ -179,11 +179,10 @@ import Auth from '../utils/auth';
 import '../index.css';
 import logo from '../images/NoPMS-cropped.png';
 
-export default function Navigation() {
+export default function Navigation({ setForceUpdateKey }) {
   const location = useLocation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const navigation = useNavigate();
-  const [reloadKey, setReloadKey] = useState(0);
 
   const isActive = (path) => {
     const currentPath = location.pathname;
@@ -194,8 +193,8 @@ export default function Navigation() {
   };
 
   const handleProjectsClick = () => {
-    if (location.pathname === '/projects') {
-      navigation(`/projects?timestamp=${Date.now()}`);
+    if (isActive('/projects')) {
+      setForceUpdateKey(prevKey => prevKey + 1);
     } else {
       navigation('/projects');
     }
