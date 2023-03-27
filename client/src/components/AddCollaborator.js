@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { ADD_COLLABORATOR } from '../utils/mutations';
 import { GET_PROJECT, GET_USER_BY_USERNAME } from '../utils/queries';
 import Auth from '../utils/auth';
+import { Box, Heading, FormControl, FormLabel, Input, Button, Text } from "@chakra-ui/react";
 
 // Searches for the input name while pulling the searched user from DB
 const CollaboratorForm = () => {
@@ -92,44 +93,84 @@ const CollaboratorForm = () => {
   };
 
   return (
-    <div>
+    <Box
+      position="relative"
+      overflow="hidden"
+      height="100vh"
+    >
+      <Box
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: "100%",
+          height: "100%",
+          background: "linear-gradient(to bottom right, #008080, #FFA500, #800080)",
+          opacity: 0.8,
+          zIndex: -1,
+        }}
+      />
+      <Box
+        maxW="1000px"
+        mx="auto"
+        mt={8}
+        p={4}
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        bg="white"
+      >
+        <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8} borderRadius="md">Add Collaborator</Heading>
         {data ? (
-            <p>
-                Success!
-            </p>
+          <Text>
+            Success!
+          </Text>
         ) : (
-            <form onSubmit={handleSubmit}>
-                <input
-                    className="form-input"
-                    placeholder="Position Name"
-                    name="positionName"
-                    type="text"
-                    value={collaborator.positionName}
-                    onChange={handleChange}
-                />
-                <input
-                    className="form-input"
-                    placeholder="Username"
-                    name="username"
-                    type="text"
-                    value={collaborator.username}
-                    onChange={handleChange}
-                />
-                {userData && userData.userByUsername && (
-                    <p>User found: {userData.userByUsername.username}</p>
-                )}
-                <button className="btn btn-primary" type="submit">
-                    Add Collaborator
-                </button>
-            </form>
+          <form onSubmit={handleSubmit}>
+            <FormControl id="positionName" mb={4}>
+              <FormLabel>Position Name</FormLabel>
+              <Input
+                type="text"
+                placeholder="Position Name"
+                name="positionName"
+                value={collaborator.positionName}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl id="username" mb={4}>
+              <FormLabel>Username</FormLabel>
+              <Input
+                type="text"
+                placeholder="Username"
+                name="username"
+                value={collaborator.username}
+                onChange={handleChange}
+              />
+            </FormControl>
+            {userData && userData.userByUsername && (
+              <Text>User found: {userData.userByUsername.username}</Text>
+            )}
+            <Button
+              bg="black"
+              color="white"
+              _hover={{ bg: 'gray.600' }}
+              size="lg"
+              width="100%"
+              mt={4}
+              type="submit"
+            >
+              Add Collaborator
+            </Button>
+          </form>
         )}
-
+  
         {error && (
-            <div className="my-3 p-3 bg-danger text-black">
-                {error.message}
-            </div>
+          <Box mt={4} p={4} bg="red.500" color="white">
+            {error.message}
+          </Box>
         )}
-    </div>
+      </Box>
+    </Box>
   );
 };
 
