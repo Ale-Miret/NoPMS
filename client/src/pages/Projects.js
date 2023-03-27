@@ -148,14 +148,20 @@ import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { REMOVE_PROJECT, REMOVE_COLLABORATOR } from '../utils/mutations';
 import { Box, Heading } from "@chakra-ui/react";
+import { useProjectContext } from '../components/ProjectContext';
 
 const Projects = () => {
-  const { loading, error, data } = useQuery(GET_PROJECTS);
+  const { projectUpdateFlag } = useProjectContext();
+  const { loading, error, data, refetch } = useQuery(GET_PROJECTS);
   const [removeCollaborator] = useMutation(REMOVE_COLLABORATOR);
   const [projects, setProjects] = useState([]);
   const [collabProjects, setCollabProjects] = useState([]);
   const userId = Auth.getProfile()?.data?._id;
   const [removeProject] = useMutation(REMOVE_PROJECT);
+
+  useEffect(() => {
+    refetch();
+  }, [projectUpdateFlag, refetch]);
 
   useEffect(() => {
     if (data && userId) {
