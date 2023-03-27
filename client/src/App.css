@@ -72,3 +72,80 @@ main {
     transform: rotate(360deg);
   }
 }
+
+.form-input {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #f3f3f3;
+  font-size: 1rem;
+  line-height: 1.5;
+  height: 100px;
+  width: 100%;
+  resize: none;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4a9fff;
+  box-shadow: 0 0 0 0.2rem rgba(74, 159, 255, 0.25);
+}
+
+.comment-container {
+  font-family: 'Montserrat Alternates', sans-serif;
+  
+}
+
+.add-collab-btn {
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.add-collab-btn:hover {
+  background-color: black!important;
+  color: white;
+}
+
+.comment-submit-btn {
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.comment-submit-btn:hover {
+  background-color: black!important;
+  color: white;
+}
+
+.comment-heading {
+  font-family: 'Montserrat Alternates', sans-serif!important;
+  font-weight: bold;
+  text-align: center;
+}
+
+.main-project-header {
+  text-align: center;
+}
+
+.project-card {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.55);
+  border: 1px solid #ccc!important;
+}
+
+.comments-h3-element {
+  font-family: 'Montserrat Alternates', sans-serif!important;
+  font-weight: bold;
+  text-align: center;
+}
+
+.p-3 {
+  margin-bottom: 15px;
+}
