@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <Box className="footer-container" py={4}>
       <Text textAlign="center" fontSize="sm">
-        &copy; 2023 My Awesome Website. All rights reserved.
+        &copy; 2023 NoPMS. All rights reserved.
       </Text>
       <Text textAlign="center" fontSize="sm">
         Created by &nbsp;

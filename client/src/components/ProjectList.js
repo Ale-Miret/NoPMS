@@ -101,9 +101,9 @@ const ProjectCard = ({ project, handleDeleteProject }) => {
         </List>
       </Box>
       <Box display="flex" justifyContent="space-between">
-        <IconButton icon={<FaTrash />} colorScheme="blue" onClick={() => handleDeleteProject(project._id)} />
+        <IconButton icon={<FaTrash />} colorScheme="pink" onClick={() => handleDeleteProject(project._id)} />
         <Link to={`/project/${project._id}`} textDecoration="none">
-          <Button size="sm" colorScheme="pink">View Details</Button>
+          <Button size="sm" colorScheme="blue">View Details</Button>
         </Link>
       </Box>
     </Box>
