@@ -183,6 +183,7 @@ export default function Navigation() {
   const location = useLocation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const navigation = useNavigate();
+  const [reloadKey, setReloadKey] = useState(0);
 
   const isActive = (path) => {
     const currentPath = location.pathname;
@@ -194,9 +195,9 @@ export default function Navigation() {
 
   const handleProjectsClick = () => {
     if (isActive('/projects')) {
-      window.location.reload();
     } else {
       navigation('/projects');
+      setReloadKey(prevKey => prevKey + 1);
     }
   };
 
@@ -206,7 +207,7 @@ export default function Navigation() {
       <Image className="navbar-logo" src={logo} alt="NoPMS logo"/>
       {Auth.loggedIn() ? (
         <>
-          <Button className="navbar-btn" onClick={handleProjectsClick}>
+          <Button key={reloadKey} className="navbar-btn" onClick={handleProjectsClick}>
             Projects
           </Button>
           <Link to="/cprojects/create" className={`nav-link ${isActive('/cprojects/create')}`}>
