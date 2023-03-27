@@ -9,6 +9,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { ChakraProvider, Flex, Box } from '@chakra-ui/react'
 
+
 import Projects from "./pages/Projects";
 import Login from "./pages/Login";
 import CreateProject from "./components/CreateProject";
@@ -17,6 +18,7 @@ import Signup from "./pages/Signup";
 import ProjectDetails from "./pages/ProjectDetails";
 import AddCollaborator from './components/AddCollaborator';
 import Footer from './components/Footer';
+import { ProjectProvider } from './components/ProjectContext';
 
 
 
@@ -50,20 +52,22 @@ function App() {
     <ChakraProvider>
       <ApolloProvider client={client}>
         <Router>
-        <Flex flexDirection="column" minHeight="100vh">
-            <Navigation/>
+          <ProjectProvider> {/* Add this line */}
+          <Flex flexDirection="column" minHeight="100vh">
+            <Navigation />
             <Box flexGrow={1}>
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/projects" element={<Projects />} />
+              <Route path="/projects" element={<Projects/>} />
               <Route path="/project/:projectId" element={<ProjectDetails />} />
               <Route path="/project/:projectId/collaborators" element={<AddCollaborator />} />
               <Route path='/cprojects/create' element={<CreateProject />} />
             </Routes>
             </Box>
             <Footer />
-            </Flex>
+          </Flex>
+          </ProjectProvider> {/* Add this line */}
         </Router>
       </ApolloProvider>
     </ChakraProvider>

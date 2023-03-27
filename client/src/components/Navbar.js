@@ -178,11 +178,13 @@ import { Flex, Spacer, Button, Image } from '@chakra-ui/react';
 import Auth from '../utils/auth';
 import '../index.css';
 import logo from '../images/NoPMS-cropped.png';
+import { useProjectContext } from '../components/ProjectContext'; 
 
 export default function Navigation() {
   const location = useLocation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const navigation = useNavigate();
+  const { toggleProjectUpdateFlag } = useProjectContext();
 
   const isActive = (path) => {
     const currentPath = location.pathname;
@@ -194,10 +196,9 @@ export default function Navigation() {
 
   const handleProjectsClick = () => {
     if (isActive('/projects')) {
-      window.location.reload();
+      toggleProjectUpdateFlag();
     } else {
       navigation('/projects');
-      window.location.reload();
     }
   };
 
