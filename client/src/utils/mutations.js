@@ -45,28 +45,6 @@ mutation AddComment($projectId: ID!, $commentText: String!) {
 }
 `;
 
-// export const CREATE_PROJECT = gql`
-//   mutation createProject(
-//     $projectName: String!
-//     $description: String!
-//     $gitHubLink: String!
-//     $projectCollaborators: [String!]
-//   ) {
-//     createProject(
-//       projectName: $projectName
-//       description: $description
-//       gitHubLink: $gitHubLink
-//       projectCollaborators: $projectCollaborators
-//     ) {
-//       _id
-//       projectName
-//       description
-//       gitHubLink
-//       projectCollaborators
-//     }
-//   }
-// `;
-
 export const CREATE_PROJECT = gql`
   mutation createProject(
     $projectName: String!
@@ -102,24 +80,6 @@ export const ADD_COLLABORATOR = gql`
   }
 }
 `;
-// export const ADD_COLLABORATOR = gql`
-//   mutation addCollaborator($projectId: ID!, $positionName: String!, $userId: String!) {
-//     addCollaborator(projectId: $projectId, positionName: $positionName, userId: $userId) {
-//       _id
-//       name
-//       description
-//       projectCollaborators {
-//         _id
-//         positionName
-//         user {
-//           _id
-//           username
-//           email
-//         }
-//       }
-//     }
-//   }
-// `;
 
 export const REMOVE_COLLABORATOR = gql`
   mutation removeCollaborator($projectId: ID!, $userId: ID!) {
@@ -136,20 +96,6 @@ export const REMOVE_COLLABORATOR = gql`
   }
 `;
 
-
-// export const CREATE_PROJECT = gql`
-//   mutation createProject($projectName: String!, $projectDescription: String!, $projectCollaborators: [CollaboratorInput]!) {
-//     createProject(projectName: $projectName, projectDescription: $projectDescription, projectCollaborators: $projectCollaborators) {
-//       _id
-//       projectName
-//       projectDescription
-//       projectCollaborators {
-//         positionName
-//         userName
-//       }
-//     }
-//   }
-// `;
 export const DELETE_PROJECT = gql`
   mutation deleteProject($projectId: ID!) {
     removeProject(projectId: $projectId) {

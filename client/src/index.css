@@ -46,13 +46,6 @@ code {
   transition: all 0.2s ease-in-out!important;
 }
 
-/* .navbar-btn:hover,
-.navbar-btn:active {
-  font-size: 18px;
-  background-color: black;
-  color: #fff;
-} */
-
 .navbar-btn:hover,
 .navbar-btn:focus,
 .navbar-btn:active {
