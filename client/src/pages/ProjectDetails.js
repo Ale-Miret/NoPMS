@@ -18,13 +18,13 @@ const ProjectDetails = () => {
     fetchPolicy: "no-cache"
   });
   // const projectComments = data?.project || {};
-// comments
+  // comments
   // const [comments, setComments] = useState([]);
 
   // const addComment = useCallback((newComment) => {
   //   setComments([...comments, newComment]);
   // }, [comments]);
-// comments
+  // comments
 
   useEffect(() => {
     if (data && data.project) {
@@ -48,41 +48,57 @@ const ProjectDetails = () => {
     }
   }, [data, getUser]);
 
-return (
-  <Box position="relative">
-    <Box
-      className="gradient-bg"
-    />
-    <Box maxW="800px" mx="auto" p={4}>
-      {loading && <Text>Loading...</Text>}
-      {error && <Text>Error: {error.message}</Text>}
-      {data && data.project && (
-        <>
-          <Heading as="h1" size="xl" mb={4}>
-            {data.project.projectName}
-          </Heading>
-          <Text mb={4}>{data.project.description}</Text>
-          <Text mb={4}>GitHub Link: {data.project.gitHubLink}</Text>
-          <RouterLink to={`/project/${data.project._id}/collaborators`}>
-            <Button colorScheme="blue" mb={4}>
-              Add Collaborator
-            </Button>
-          </RouterLink>
-          <Heading as="h2" size="lg" mb={4}>
-            Collaborators:
-          </Heading>
-          <UnorderedList mb={4}>
-            {userData.map((user, index) => (
-              <ListItem key={`${user._id}-${index}`}>{user.username}</ListItem>
-            ))}
-          </UnorderedList>
-          <CommentForm projectId={data.project._id} />
-      <Comments comments={data.project.comments} />
-        </>
-      )}
+  return (
+    <Box position="relative">
+      <Box className="gradient-bg" />
+      <Box maxW="800px" mx="auto" p={4}>
+        {loading && <Text>Loading...</Text>}
+        {error && <Text>Error: {error.message}</Text>}
+        {data && data.project && (
+          <>
+            <Box className="project-card">
+              <Heading className='main-project-header'as="h1" size="xl" mb={4}>
+                {data.project.projectName}
+              </Heading>
+              <Text mb={4}>{data.project.description}</Text>
+              &nbsp;
+              <Box display="flex"  alignItems="center" mb={4}>
+                <Text mb={4}>GitHub Link: {data.project.gitHubLink}</Text>              
+                <Box ml={4}>
+                  <RouterLink to={`/project/${data.project._id}/collaborators`}>
+                    <Button className='add-collab-btn'  mb={4} mr={4} mt="18px">
+                      Add Collaborator
+                    </Button>
+                  </RouterLink>
+                </Box>
+              </Box>
+              <Box className="collaborator-list">
+                <Heading as="h2" size="lg" mb={4}>
+                  Collaborators:
+                </Heading>
+                <UnorderedList mb={4}>
+                  {userData.map((user, index) => (
+                    <ListItem key={`${user._id}-${index}`}>
+                      <Box className="collaborator-list-item">
+                      <span className="git-user">{user.username}</span>
+                    </Box>
+                    </ListItem>
+                  ))}
+                </UnorderedList>
+              </Box>
+              <Box my={6} borderTop="1px solid"
+                  borderColor="gray.200"
+                  backgroundColor="white"
+                  width="100%"
+                  height="2px" />
+              <CommentForm projectId={data.project._id} />
+              <Comments comments={data.project.comments} />
+            </Box>
+          </>
+        )}
+      </Box>
     </Box>
-  </Box>
-);
+  );
 };
 
 export default ProjectDetails;
