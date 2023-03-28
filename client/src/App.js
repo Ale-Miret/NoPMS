@@ -52,7 +52,7 @@ function App() {
     <ChakraProvider>
       <ApolloProvider client={client}>
         <Router>
-          <ProjectProvider> {/* Add this line */}
+          <ProjectProvider> 
           <Flex flexDirection="column" minHeight="100vh">
             <Navigation />
             <Box flexGrow={1}>
@@ -67,7 +67,7 @@ function App() {
             </Box>
             <Footer />
           </Flex>
-          </ProjectProvider> {/* Add this line */}
+          </ProjectProvider> 
         </Router>
       </ApolloProvider>
     </ChakraProvider>

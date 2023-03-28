@@ -84,7 +84,7 @@ const ProjectList = ({ projects }) => {
       await removeProject({
         variables: { projectId },
       });
-      toggleProjectUpdateFlag(); // Add this line
+      toggleProjectUpdateFlag(); 
     } catch (err) {
       console.error(err);
     }
