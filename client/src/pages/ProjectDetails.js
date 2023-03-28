@@ -11,19 +11,24 @@ import { useProjectContext } from '../components/ProjectContext';
 
 
 const ProjectDetails = () => {
+  // Context and state
   const { projectUpdateFlag } = useProjectContext();
   const { projectId } = useParams();
   const [userData, setUserData] = useState([]);
   const [getUser, { data: userIdData }] = useLazyQuery(GET_USER_BY_ID);
+  // Queries
   const { loading, error, data, refetch } = useQuery(GET_PROJECT, {
     variables: { projectId },
     fetchPolicy: "no-cache"
   });
+
+  // Refetch the query on update
   
   useEffect(() => {
     refetch();
   }, [projectUpdateFlag, refetch]);
 
+  // Fetch user data for collaborators
   useEffect(() => {
     if (data && data.project) {
       const collaboratorUserIds = data.project.projectCollaborators.map(collaborator => collaborator.userName);
@@ -46,6 +51,7 @@ const ProjectDetails = () => {
     }
   }, [data, getUser]);
 
+  // Render project details
   return (
     <Box position="relative">
       <Box className="gradient-bg" />

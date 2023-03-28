@@ -1,8 +1,9 @@
+// Footer component
 import React from 'react';
 import { Box, Link, Text } from '@chakra-ui/react';
 
 const Footer = () => {
-  
+  // Render footer content
   return (
     <Box className="footer-container" py={4}>
       <Text textAlign="center" fontSize="sm">

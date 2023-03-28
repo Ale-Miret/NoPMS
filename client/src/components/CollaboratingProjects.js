@@ -7,15 +7,20 @@ import { GET_PROJECTS, GET_USER_BY_ID } from '../utils/queries';
 import { Accordion, AccordionItem, AccordionButton, AccordionIcon, Box, AccordionPanel, Button, Link as ChakraLink, List, ListItem} from '@chakra-ui/react';
 import { FaGithub } from 'react-icons/fa';
 
+
+// Component to render a list of collaborators in a project
 const CollaboratingList = ({ project, handleDeleteProject }) => {
+   // State for storing user data for each collaborator in a project
   const [userData, setUserData] = useState([]);
   const [getUser, { data: userIdData }] = useLazyQuery(GET_USER_BY_ID);
   
+  // Fetches user data for each collaborator in a project
   useEffect(() => {
     if (project) {
       const collaboratorUserIds = project.projectCollaborators.map(collaborator => collaborator.userName);
       console.log(`collaboratorUserId: ${collaboratorUserIds}`);
       const fetchedUserData = [];
+      // Fetch user data for each collaborator
       const getUserData = async () => {
         try {
           for (const userId of collaboratorUserIds) {
@@ -34,6 +39,7 @@ const CollaboratingList = ({ project, handleDeleteProject }) => {
   }, [project]);
 
   return (
+     // Renders the project card with project details
     <Box maxW="" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="0 0 10px rgba(0, 0, 0, 0.3)" p={6} mb={8} className="project-card">
         <div>
             <h3 style={{fontWeight: 'bold', fontSize: '20px'}}>{project.projectName}</h3>
@@ -58,7 +64,9 @@ const CollaboratingList = ({ project, handleDeleteProject }) => {
   );
 };
 
+// Component to render a list of collaborating projects
 const CollaboratingProjects = ({ projects }) => {
+  // Define removeProject mutation and handleDeleteProject function to remove a project
   const [removeProject] = useMutation(REMOVE_PROJECT, {
     refetchQueries: [{ query: GET_PROJECTS }],
   });
@@ -73,6 +81,7 @@ const CollaboratingProjects = ({ projects }) => {
     }
   };
 
+  // Accordion to display list of collaborating projects
   return (
     <Accordion defaultIndex={[0]} allowMultiple>
   <AccordionItem>

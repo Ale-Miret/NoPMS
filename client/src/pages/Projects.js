@@ -1,3 +1,4 @@
+// export default Projects;
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import ProjectList from '../components/ProjectList';

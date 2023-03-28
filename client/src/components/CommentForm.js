@@ -1,3 +1,4 @@
+// export default CommentForm;
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -6,13 +7,14 @@ import Auth from '../utils/auth';
 import { Box, FormControl, FormLabel, Button, Textarea, Heading, Text } from "@chakra-ui/react";
 import { useProjectContext } from '../components/ProjectContext';
 
-
+// CommentForm component for adding comments to a project
 const CommentForm =({projectId}) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
   const { toggleProjectUpdateFlag } = useProjectContext(); 
   const [addComment, { error }] = useMutation(ADD_COMMENT);
 
+  // Function to handle the form submit event
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -74,6 +76,7 @@ const CommentForm =({projectId}) => {
           </form>
         </>
       ) : (
+        // Render a message if the user is not logged in
         <Text>
           You need to be logged in to share your thoughts. Please{' '}
           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>

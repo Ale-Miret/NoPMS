@@ -1,8 +1,11 @@
+// Import the necessary dependencies from React and Chakra UI
 import React from 'react';
 import { Box, Heading, Text, Button } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
+// Define a functional component called InfoSection
 const InfoSection = () => {
+  // Return a Box component with some text and a Button inside it
   return (
     <Box className="info-section" py={20} px={4}>
       <Heading className="info-header" as="h2" size="2xl" mb={5}>Welcome to our Project Management Tool</Heading>
@@ -13,4 +16,5 @@ const InfoSection = () => {
   );
 };
 
+// Export the InfoSection component as the default export of this module
 export default InfoSection;

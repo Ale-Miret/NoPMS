@@ -1,5 +1,7 @@
+// Import Apollo Client's gql function
 import { gql } from '@apollo/client';
 
+// Define a GraphQL mutation to log in a user
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -8,6 +10,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
+// Define a GraphQL mutation to add a new user
 export const ADD_USER = gql`
 mutation AddUser($username: String!, $email: String!, $gitHubUserName: String!, $password: String!) {
   addUser(username: $username, email: $email, gitHubUserName: $gitHubUserName, password: $password) {
@@ -16,6 +19,7 @@ mutation AddUser($username: String!, $email: String!, $gitHubUserName: String!, 
 }
 `;
 
+// Define a GraphQL mutation to add a comment to a project
 export const ADD_COMMENT = gql`
 mutation AddComment($projectId: ID!, $commentText: String!) {
   addComment(projectId: $projectId, commentText: $commentText) {
@@ -45,6 +49,7 @@ mutation AddComment($projectId: ID!, $commentText: String!) {
 }
 `;
 
+// Define a GraphQL mutation to create a new project
 export const CREATE_PROJECT = gql`
   mutation createProject(
     $projectName: String!
@@ -72,6 +77,7 @@ export const CREATE_PROJECT = gql`
   }
 `;
 
+// Define a GraphQL mutation to add a collaborator to a project
 export const ADD_COLLABORATOR = gql`
   mutation addCollaborator($projectId: String!, $positionName: String!, $username: String!, $userId: String!) {
     addCollaborator(projectId: $projectId, positionName: $positionName, username: $username, userId: $userId) {
@@ -81,6 +87,7 @@ export const ADD_COLLABORATOR = gql`
 }
 `;
 
+// Define a GraphQL mutation to remove a collaborator from a project
 export const REMOVE_COLLABORATOR = gql`
   mutation removeCollaborator($projectId: ID!, $userId: ID!) {
     removeCollaborator(projectId: $projectId, userId: $userId) {
@@ -113,4 +120,5 @@ export const DELETE_PROJECT = gql`
   }
 `;
 
+// Alias for DELETE_PROJECT to remove confusion
 export const REMOVE_PROJECT = DELETE_PROJECT;

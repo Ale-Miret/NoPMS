@@ -7,11 +7,16 @@ import logo from '../images/NoPMS-cropped.png';
 import { useProjectContext } from '../components/ProjectContext'; 
 
 export default function Navigation() {
+    // Set the current location
   const location = useLocation();
+   // Set the current date and time
   const [currentDate, setCurrentDate] = useState(new Date());
+  // Use the navigate function for navigation
   const navigation = useNavigate();
+   // Use the project context to toggle project update flag
   const { toggleProjectUpdateFlag } = useProjectContext();
 
+  // Check if the current path is active and apply the active class
   const isActive = (path) => {
     const currentPath = location.pathname;
     if (path === currentPath || currentPath.startsWith(`${path}/`)) {
@@ -20,6 +25,7 @@ export default function Navigation() {
     return '';
   };
 
+   // Handle click on Projects button
   const handleProjectsClick = () => {
     if (isActive('/projects')) {
       toggleProjectUpdateFlag();
@@ -48,6 +54,7 @@ export default function Navigation() {
           </Button>
         </>
       ) : (
+        // If the user is not logged in, show Login and Signup buttons
         <>
           <Link to="/" className={`nav-link ${isActive('/')}`}>
             <Button className="navbar-btn">Login</Button>
