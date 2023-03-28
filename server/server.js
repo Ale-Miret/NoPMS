@@ -1,21 +1,12 @@
-// Import Express and Apollo-Server to run the app
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-
-// Path & Passport to password verify and send the user to another page
 const path = require('path');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
-// Password encryption and user verification by token
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-// Database and middleware
 const db = require('./config/connection');
 const { authMiddleware } = require('./utils/auth');
-
-// Resolvers, TypeDefs & User model for DB
 const { typeDefs, resolvers } = require('./schemas');
 const { User } = require('./models');
 

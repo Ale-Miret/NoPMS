@@ -4,9 +4,9 @@ import { useMutation, useLazyQuery } from "@apollo/client";
 import { REMOVE_PROJECT } from "../utils/mutations";
 import { GET_PROJECTS, GET_USER_BY_ID } from "../utils/queries";
 import { Box, Heading, Text, List, ListItem, Button, Link as ChakraLink, IconButton } from "@chakra-ui/react";
-import { FaGithub, FaEye, FaTrash } from 'react-icons/fa';
+import { FaGithub, FaTrash } from 'react-icons/fa';
 import '../projects.css';
-import { useProjectContext } from '../components/ProjectContext'; 
+import { useProjectContext } from '../components/ProjectContext'; // 
 
 
 const ProjectCard = ({ project, handleDeleteProject }) => {

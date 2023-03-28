@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, FormControl, FormLabel, Input, Button, UnorderedList, ListItem, Flex } from "@chakra-ui/react";
+import { UnorderedList, Flex } from "@chakra-ui/react";
 import { ChatIcon } from '@chakra-ui/icons';
 
 // Component to render comments section for a projec

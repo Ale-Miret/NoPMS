@@ -103,8 +103,6 @@ export const REMOVE_COLLABORATOR = gql`
   }
 `;
 
-
-// Define a GraphQL mutation to delete a project
 export const DELETE_PROJECT = gql`
   mutation deleteProject($projectId: ID!) {
     removeProject(projectId: $projectId) {

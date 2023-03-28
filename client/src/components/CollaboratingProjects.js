@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, useLazyQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { REMOVE_PROJECT } from "../utils/mutations";
-import { GET_PROJECTS, GET_PROJECT, GET_USER_BY_ID } from '../utils/queries';
-import Auth from '../utils/auth';
-import { Accordion, AccordionItem, AccordionButton, AccordionIcon, Box, AccordionPanel, Divider, Button, Link as ChakraLink, List, ListItem} from '@chakra-ui/react';
+import { GET_PROJECTS, GET_USER_BY_ID } from '../utils/queries';
+import { Accordion, AccordionItem, AccordionButton, AccordionIcon, Box, AccordionPanel, Button, Link as ChakraLink, List, ListItem} from '@chakra-ui/react';
 import { FaGithub } from 'react-icons/fa';
 
 

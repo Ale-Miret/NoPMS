@@ -1,11 +1,9 @@
-// export default CreateProject;
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_PROJECT } from '../utils/mutations';
 import { GET_PROJECTS } from '../utils/queries';
 import { Link } from 'react-router-dom';
-import AddCollaborator from './AddCollaborator';
 import Auth from '../utils/auth';
 import { Box, Heading, FormControl, FormLabel, Input, Button, Textarea } from "@chakra-ui/react";
 
@@ -59,13 +57,8 @@ const CreateProject = () => {
             const data = await createProj({
                 variables: {
                     ...formState
-                    // projectName: formState.projectName,
-                    // description: formState.description,
-                    // gitHubLink: formState.gitHubLink,
-                    // // projectCollaborators: formState.projectCollaborators,
                 },
             });
-            // Auth.login(data.createProj.token);
             navigate(`/projects`);
             console.log(`creating: ${formState}`);
 
