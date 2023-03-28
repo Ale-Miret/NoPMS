@@ -8,15 +8,18 @@ import '../signup.css';
 import Auth from '../utils/auth';
 
 const Signup = () => {
+   // Set up form state with initial values for inputs
   const [formState, setFormState] = useState({
     username: '',
     email: '',
     gitHubUserName: '',
     password: '',
   });
+  // Set up mutation and error/data states with initial values
   const [addUser, { error, data }] = useMutation(ADD_USER);
   const navigate = useNavigate();
 
+    // Handle input changes and update form state
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -26,6 +29,7 @@ const Signup = () => {
     });
   };
 
+  // Handle form submission and attempt to create new user with form data
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
@@ -35,6 +39,7 @@ const Signup = () => {
         variables: { ...formState },
       });
 
+      // If successful, log in user and navigate to homepage
       Auth.login(data.addUser.token);
       await navigate('/');
 
@@ -43,6 +48,7 @@ const Signup = () => {
     }
   };
 
+  // Render sign up form
   return (
     <div className="signup-container">
     <Box maxW="600px" mx="auto" mt={8} p={4}>
@@ -51,11 +57,13 @@ const Signup = () => {
           <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8}  borderRadius="md" >Sign Up</Heading>
           <Box p={4}>
             {data ? (
+                 // Show success message and link to homepage if user created successfully
               <p>
                 Success! You may now head{' '}
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
+               // Show sign up form
               <form onSubmit={handleFormSubmit}>
                 <Input
                   className="form-input"

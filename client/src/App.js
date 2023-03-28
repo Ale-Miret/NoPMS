@@ -76,11 +76,4 @@ function App() {
 
 export default App;
             
-            // <Route path="/details" element={<ProjectDetails />} />
-            // <Route path="/contact" element={<Contact />} />
-// / import components/
-
-
-// import pages
-// import ProjectDetails from "./pages/ProjectDetails";
-// import Contact from "./pages/Contact";
+        

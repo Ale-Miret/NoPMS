@@ -93,6 +93,7 @@ const CollaboratorForm = () => {
   };
 
   return (
+     // The main container box
     <Box
       position="relative"
       overflow="hidden"
@@ -122,10 +123,12 @@ const CollaboratorForm = () => {
       >
         <Heading as="h1" size="lg" textAlign="center" bg="black" color="white" mb={8} borderRadius="md">Add Collaborator</Heading>
         {data ? (
+          // Success message if data is present
           <Text>
             Success!
           </Text>
         ) : (
+          // Form input elements
           <form onSubmit={handleSubmit}>
             <FormControl id="positionName" mb={4}>
               <FormLabel>Position Name</FormLabel>

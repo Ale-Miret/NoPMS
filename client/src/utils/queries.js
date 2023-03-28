@@ -1,24 +1,7 @@
+// Importing gql from Apollo Client package
 import { gql } from "@apollo/client";
 
-// export const GET_PROJECTS = gql`
-//   query GetProjects {
-//     projects {
-//       _id
-//       projectName
-//       description
-//       gitHubLink
-//       projectCollaborators {
-//         _id
-//         userName
-//       }
-//       user {
-//         _id
-//         username
-//       }
-//     }
-//   }
-// `;
-
+// Query to get all projects
 export const GET_PROJECTS = gql`
 query GetProjects {
   projects {
@@ -42,6 +25,7 @@ query GetProjects {
 }
 `;
 
+// Define a GraphQL query to retrieve a single project by ID
 export const GET_PROJECT = gql`
   query GetProject($projectId: ID!) {
     project(projectId: $projectId) {
@@ -63,6 +47,7 @@ export const GET_PROJECT = gql`
   }
 `;
 
+// Define a GraphQL query to retrieve a user by their username
 export const GET_USER_BY_USERNAME = gql`
   query getUserByUsername($username: String!) {
     userByUsername(username: $username) {
@@ -72,6 +57,7 @@ export const GET_USER_BY_USERNAME = gql`
   }
 `;
 
+// Define a GraphQL query to retrieve a user by their ID
 export const GET_USER_BY_ID = gql`
 query getUser($userId: ID!) {
   userById(userId: $userId) {
