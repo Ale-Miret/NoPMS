@@ -21,12 +21,9 @@ const ProjectDetails = () => {
     variables: { projectId },
     fetchPolicy: "no-cache"
   });
-<<<<<<< HEAD
 
   // Refetch the query on update
-=======
   
->>>>>>> 3fa0c6f3f2357c7cda3737ea6257a5cc15c638b6
   useEffect(() => {
     refetch();
   }, [projectUpdateFlag, refetch]);
